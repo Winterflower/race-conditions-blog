@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+             
+      </ul>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Notes on Interviewing for Python Developer Roles</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-06-15T14:25:58&#43;01:00">Jun 15, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>4 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p>A few months ago, I opened my Twitter DMs for questions about tech interviews for Python developer roles. I received lots of great questions from junior developers looking for their first software engineering role and from more experienced developers looking to make a change to Python development. Because there seems to be sufficient interest in interviewing for Python dev roles, I&rsquo;ve decided to compile the notes that I&rsquo;ve taken over my four years of interviewing for Python developer roles and publish them here for the benefit of anyone applying or thinking of applying for a Python developer job.</p>
+
+<p>As usual, the standard disclaimer for advice applies: my experience is limited to the UK and London in particular and has been mostly confined to junior-to-midlevel developer roles in finance, fintech, machine learning and e-commerce. The notes I&rsquo;ve taken most certainly reflect the hiring quirks of these particular industries and location and might not be applicable for every situation. If you are applying for a role and are not sure what to expect from the interview, don&rsquo;t hesitate to ask your recruiter about the interview format. At least at larger companies, they will usually be able to tell you a bit about what to expect (ie. &lsquo;classical&rsquo; tech interview, pair programming exercise, presentation etc). If you have any specific questions about working as a junior-to-mid level Python developer, I am also more than happy to help. My contact information can be found <a href="https://race-conditions.net">here</a>.</p>
+
+<h2 id="python-in-the-industry">Python in the industry</h2>
+
+<p>Before we dive into the type of questions you might be asked in a Python developer interview, I wanted to give a brief overview of the kinds of Python-based technologies that I&rsquo;ve encountered in my years working in the industry. Usually, they can roughly be divided into four categories: e-commerce and web applications developed using Django or Flask, gluecode layers for deploying and maintaining infrastructure, data processing pipelines that read data from one data store and write it into another and large scale financial application ecosystems (the likes of Athena at JP Morgan and Quartz at Bank of America Merril Lynch). Although you will almost certainly encounter questions about core Python topics, it&rsquo;s also likely that each industry and each tech stack that you are interviewing for might have its own set of extra questions. For example, for roles where you will be using Python to construct data processing pipelines, you might be asked about databases and ORMs.</p>
+
+<h2 id="technical-topics">Technical Topics</h2>
+
+<p>I&rsquo;ve grouped the technical topics that have frequently come up in Python interviews into subsections for easier navigation. I&rsquo;ve completely left out traditional topics that crop up in the classical whiteboarding interviews: the thousands of variations on linked lists, trees and so forth. While important for one purpose or another and certainly relatively frequently seen in interviews, I&rsquo;ve decided to leave them out, because they have been covered elsewhere by more experienced writers.</p>
+
+<h3 id="object-oriented-programming">Object oriented programming</h3>
+
+<ul>
+<li>Key concepts in OOP: be able to explain inheritance, polymorphism, encapsulation</li>
+<li>Difference between new style and old style Python classes</li>
+<li>Multiple inheritance and method resolution order</li>
+<li>Practical exercises where you are given a subclass inheriting from multiple superclasses and asked to resolve a method call</li>
+<li>Difference between overriding and overloading</li>
+<li>OOP and design: Is Python good for OOP projects? Why or why not? If you&rsquo;ve used another OOP heavy language such as Java, you can compare and contrast the features offered by Java to those offered by Python.</li>
+</ul>
+
+<h3 id="python-s-built-in-data-structures">Python&rsquo;s built-in data structures</h3>
+
+<ul>
+<li>Discuss the difference between mutable and immutable data structures and give an example of each</li>
+<li>Knowledge of how Python dictionaries work internally</li>
+<li>Are strings mutable or immutable? What consequences does this have in for-loops that append to a string?</li>
+</ul>
+
+<h3 id="pythonic-features">Pythonic features</h3>
+
+<ul>
+<li>Writing and reading comprehensions (list, dict, set)</li>
+<li>Being able to explain when and why it is good to use a list comprehension instead of constructing a list with for-loops and call to <code>.append</code> for example.</li>
+<li>Writing and reading generator functions and giving reasons when and why to use them</li>
+<li>Writing co-routines using generator functions&rsquo; <code>yield</code> syntax</li>
+<li>Understanding context managers and when to use them</li>
+<li>Understanding and writing decorators</li>
+</ul>
+
+<h3 id="functional-programming-with-python">Functional programming with Python</h3>
+
+<p>Functional programming styles come up very rarely in Python interviews, perhaps because unlike Clojure, Python is not very opinionated about which programming paradigm to go for. In any case, once or twice I have been asked about the following:
+- anonymous functions/lambda functions
+- filter, map, reduce and give and an example of using each</p>
+
+<h3 id="miscellaneous">Miscellaneous</h3>
+
+<p>As warm-up or conclusion questions, you might also be asked about your experience in other programming languages (for example, Java ) and how this compares to Python. In these cases, it&rsquo;s usually helpful to know a bit about how the most common implementation of Python (CPython) works under the hood.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/software-engineer-contracting-in-the-uk/"><i class="fa fa-chevron-circle-left"></i> Software Engineer Contracting in the UK</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6> | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

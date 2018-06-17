@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Race Conditions</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Jun 2018 13:46:40 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 15 Jun 2018 14:25:58 +0100</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Notes on Interviewing for Python Developer Roles</title>
+      <link>http://blog.race-conditions.net/posts/notes-on-interviewing-python/</link>
+      <pubDate>Fri, 15 Jun 2018 14:25:58 +0100</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/notes-on-interviewing-python/</guid>
+      <description>A few months ago, I opened my Twitter DMs for questions about tech interviews for Python developer roles. I received lots of great questions from junior developers looking for their first software engineering role and from more experienced developers looking to make a change to Python development. Because there seems to be sufficient interest in interviewing for Python dev roles, I&amp;rsquo;ve decided to compile the notes that I&amp;rsquo;ve taken over my four years of interviewing for Python developer roles and publish them here for the benefit of anyone applying or thinking of applying for a Python developer job.</description>
+    </item>
     
     <item>
       <title>Software Engineer Contracting in the UK</title>
