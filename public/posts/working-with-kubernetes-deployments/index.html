@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+             
+      </ul>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Working With Kubernetes Deployments</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-10-26T21:26:40&#43;01:00">Oct 26, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>2 min read</li>
+    </ul>
+</aside>
+    
+
+    <p>When I first started working with Kubernetes Deployments, the defacto way to create
+a deployment was to write up some configuration into a YAML file and run <code>kubectl --namespace=&lt;somespace&gt; apply -f &lt;file&gt;</code>.
+This made it easy to make changes to the deployment later. Simply, make the required changes in the file and run
+<code>kubectl --namespace=&lt;somespace&gt; apply -f &lt;filename&gt;</code>.
+However, recently after following some Google Kubernetes Engine tutorials, I&rsquo;ve gotten into a habit of creating
+deployments using the <code>kubectl --namespace=&lt;somespace&gt; run</code> command. I then realised that I needed to make
+some changes to the deployment and tried to export the configuration as YAML, make the change and apply it, but
+this resulted in a warning:</p>
+
+<pre><code>Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
+</code></pre>
+
+<p>Since then, I&rsquo;ve tried to find a way of using both methods interchangeably. For example, I&rsquo;d like to first create
+a deployment with <code>kubectl run</code> and then later switch to updating it by modifying the YAML file and running
+<code>kubectl --namespace=&lt;somespace&gt; apply</code>. Recently, while reading the <em>Kubernetes: Up and Running</em> book by Joe Beda,
+Brendan Burns and Kelsey Hightower, I stumbled upon a way of converting a deployment created with <code>kubectl run</code>
+to a deployment that you can manipulate with a YAML config file and <code>kubectl apply</code>.</p>
+
+<pre><code>kubectl get deployments &lt;deploymentname&gt; --export -o yaml &gt; &lt;yaml filename&gt;
+kubectl replace -f &lt;filename&gt; --save-config 
+</code></pre>
+
+<p>You can then make changes to the config stored in <filename> and apply the changes with <code>kubectl apply</code>.
+I hope this is useful to anyone else who wants to switch between using these two methods to manage your
+Kubernetes deployments!</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/notes-on-interviewing-python/"><i class="fa fa-chevron-circle-left"></i> Notes on Interviewing for Python Developer Roles</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6> | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

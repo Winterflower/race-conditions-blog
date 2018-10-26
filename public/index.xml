@@ -6,10 +6,19 @@
     <description>Recent content on Race Conditions</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Jun 2018 14:25:58 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 26 Oct 2018 21:26:40 +0100</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Working With Kubernetes Deployments</title>
+      <link>http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/</link>
+      <pubDate>Fri, 26 Oct 2018 21:26:40 +0100</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/</guid>
+      <description>When I first started working with Kubernetes Deployments, the defacto way to create a deployment was to write up some configuration into a YAML file and run kubectl --namespace=&amp;lt;somespace&amp;gt; apply -f &amp;lt;file&amp;gt;. This made it easy to make changes to the deployment later. Simply, make the required changes in the file and run kubectl --namespace=&amp;lt;somespace&amp;gt; apply -f &amp;lt;filename&amp;gt;. However, recently after following some Google Kubernetes Engine tutorials, I&amp;rsquo;ve gotten into a habit of creating deployments using the kubectl --namespace=&amp;lt;somespace&amp;gt; run command.</description>
+    </item>
     
     <item>
       <title>Notes on Interviewing for Python Developer Roles</title>
