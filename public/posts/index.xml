@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Fri, 26 Oct 2018 21:26:40 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 06 Nov 2018 17:33:18 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>What Makes a Good Technologist</title>
+      <link>http://blog.race-conditions.net/posts/what-makes-a-good-technologist/</link>
+      <pubDate>Tue, 06 Nov 2018 17:33:18 +0000</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/what-makes-a-good-technologist/</guid>
+      <description>A recent job application asked me to reflect on the characteristics that define a good data scientists. I really liked the question and the kinds of thoughts it generated in my mind, so I decided to poke around this topic a bit more and think about the kinds of qualities that make a good technologist. The term technologist is quite broad in scope - indeed, most of the appliances we use in every day life (including writing - the applicance I&amp;rsquo;m using to communicate with right now!</description>
+    </item>
     
     <item>
       <title>Working With Kubernetes Deployments</title>
