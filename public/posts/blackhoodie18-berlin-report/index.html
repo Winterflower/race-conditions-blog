@@ -1,0 +1,122 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Blackhoodie18 Berlin Conference Report</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-11-20T18:17:24Z">Nov 20, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>4 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p><a href="https://www.blackhoodie.re/">Blackhoodie RE</a> - a one day conference(which I&rsquo;ll be talking about in this blogpost) and two-day intensive security topics bootcamp(next blogpost) - took place this weekend in Berlin and I was fortunate enough to be able to attend! Phew! The weather was cold (hi Berlin, you remind me of Helsinki!), but my braincircuits were still overclocked by all the great <a href="https://www.blackhoodie.re/schedule/abstracts">talks</a> and the two day bootcamp in Track 3 - lots of crypto, Return Oriented Programming and exploits, and Windows Kernel internals. I&rsquo;m already excited for next year and I&rsquo;m hoping I can contribute back and help to organise the event/give a workshop next year!</p>
+
+<p>The Blackhoodie event was started by <a href="https://twitter.com/pinkflawd">Mari0n</a> as a way to share knowledge and increase the number of women in reverse engineering and other low level infosec jobs. The event from this weekend was organised by a great team - <a href="https://twitter.com/_kylma">_KYLMA</a>, <a href="https://barbieauglend.re/">barbie</a>, Priya, <a href="https://twitter.com/pwissenlit">Gwaby</a>, Ninon and Bhavna (apologies if I missed anyone!). It takes a lot of effort to organise an amazing event, so a big thank you to the Blackhoodie 18 organising team, <a href="https://twitter.com/andreasdotorg">Andreas</a> and <a href="https://twitter.com/here">HERE Technologies</a> for hosting us and to all of the wonderful instructors, speakers and attendees!
+Anyone interested in learning more, please checkout the Blackhoodie <a href="https://www.blackhoodie.re/">website</a> and especially the <a href="https://www.blackhoodie.re/schedule/">conference talks section</a>.</p>
+
+<h2 id="day-1-blackhoodie-conference">Day 1 -  Blackhoodie Conference</h2>
+
+<p>First day! A cold morning, but a warm welcome at <a href="https://twitter.com/here">HERE Technologies</a> and then on to a full day of talks. First up was a talk by <a href="https://twitter.com/bxsays">.bx</a> on reversing bootloaders and in particular the Das U-Boot loader. What are loaders and why do we need them? A loader transforms a binary to a running application. A bootloader is a special loader that runs before the operating system starts. Reversing bootloaders can give us a better understanding of bootloader security and help us design hardening techniques that can retroactively applied to existing bootloaders. An interesting property of bootloaders is that they can <a href="https://en.wikipedia.org/wiki/Self-relocation">self-relocate</a> in memory!</p>
+
+<p>After U-Boot, the audience heard from Anna Neal who presented her attempts to reverse engineer the Stern Iron Maiden pinball game. The coolest part of the talk was that Anna had written her own program to unpack the .spk format which the Stern games are packaged in! Following the pinball reverse engineering, the audience heard about TinyNuke, a French made banking malware. Nha-Khanh Nguyen demonstrated how to reverse engineer the malware to understand how it infects the victim&rsquo;s computers. Turns out some early versions of FireFox allowed the loading of unverified DLLs and the malware was able to exploit this by installing an early version of FireFox and then loading the malicious payload into it.</p>
+
+<p>After TinyNuke, Veronica Valeros give a walkthrough of a real life investigation of a university Linux server being attacked by a Monero cryptominer (the lesson learnt here was: patch/update your Jenkins! Those CVEs can come back and bite you!), anais gave us a walkthrough of a tool she and her colleagues developed to run Android applications that detected a rooted environment in a rooted environment (do some cool memory tricks to launch a rooted shell after the application is running), Maria Rigaki spoke about using Generative Adversarial Networks to train malware to mimic the network traffic patterns of two users having a Facebook Messenger conversation. Afterwards, Dana Baril did a deep dive into how Windows Credential manager works and explained her work to detect when an application does a malicious credential request (as was the case with the mimikatz malware that dumped a user&rsquo;s credentials). Dana added a new event to the Windows event logs to help detect when an application maliciously dumps all of the user&rsquo;s credentials. This data is then sent on for further analysis with ML algorithms.</p>
+
+<p>Continuing with the theme of ML and security, Aurore Fass spoke about JaST, a random forests based classifier for detecting malicious Javascript, Luca Nagy gave an overview of the Matrix Ransomware and introduced the ChaCha cipher and Carly gave a demo of some mindboggling &ldquo;features&rdquo; in C++. After a short break, we saw two great presentations: Patricia Aas speaking on sandboxing and how Linux OS namespaces help browsers run external code safely and Essy presenting on the topic of &lsquo;hidden in plain sight&rsquo; - various methodologies and tools that can be used by attackers to mask malicious activity with legitimate process. The one thing that I found particularly interesting was <a href="https://lolbas-project.github.io/">LOLbas</a> which aims to use binaries natively available on Windows to find exploits.</p>
+
+<p>For a security newbie and a first time Blackhoodie attendee, this was a lot to take in, but I still enjoyed every moment!</p>
+
+<p>Here are some other writeups of Blackhoodie events:</p>
+
+<ul>
+<li><a href="https://www.stratosphereips.org/blog/2018/11/19/blackhoodie-bootcamp-4-wrap-up-berlin-2018">Blackhoodie #4</a> by Veronica Valeros and Maria Rigaki</li>
+</ul>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/what-makes-a-good-technologist/"><i class="fa fa-chevron-circle-left"></i> What Makes a Good Technologist</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

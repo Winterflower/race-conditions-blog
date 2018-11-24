@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Tue, 06 Nov 2018 17:33:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Nov 2018 18:17:24 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Blackhoodie18 Berlin Conference Report</title>
+      <link>http://blog.race-conditions.net/posts/blackhoodie18-berlin-report/</link>
+      <pubDate>Tue, 20 Nov 2018 18:17:24 +0000</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/blackhoodie18-berlin-report/</guid>
+      <description>Blackhoodie RE - a one day conference(which I&amp;rsquo;ll be talking about in this blogpost) and two-day intensive security topics bootcamp(next blogpost) - took place this weekend in Berlin and I was fortunate enough to be able to attend! Phew! The weather was cold (hi Berlin, you remind me of Helsinki!), but my braincircuits were still overclocked by all the great talks and the two day bootcamp in Track 3 - lots of crypto, Return Oriented Programming and exploits, and Windows Kernel internals.</description>
+    </item>
     
     <item>
       <title>What Makes a Good Technologist</title>
