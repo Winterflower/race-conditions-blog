@@ -1,0 +1,134 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Blackhoodie18 Berlin Bootcamp Report</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-11-20T18:17:24Z">Nov 20, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>7 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p>In my <a href="https://blog.race-conditions.net/posts/blackhoodie18-berlin-report/">previous post</a> I wrote a few notes about the Blackhoodie18 Conference day. In this post, I&rsquo;ll do a brief overview of some of the topics that were covered in the two day (intensive!) bootcamp.
+For some reason(most likely I did not read the track descriptions closely enough), I applied to track 3. The name (on my way to rock as hell) sounded super cool and I was really intrigued by the topics that were covered (intro to crypto, intro to Return Oriented Programming (ROP) and intro to Windows Kernel internals via building a keylogger). In reality, given my limited knowledge of reverse engineering, I should have probably applied to Tracks 1 or 2, but alas, I was scheduled for Track 3 and I was going to do my best prep to enjoy it as much as I could! A huge thank you to all of the instructors at Blackhoodie18! All of the mistakes in this writeup are mine and mine alone - please feel free to drop a note to camilla[at]synbyote.io if you have feedback/comments!</p>
+
+<h2 id="introduction-to-cryptography">Introduction to Cryptography</h2>
+
+<p>The first day of track 3 was all about crypto! I was quite excited to revisit these topics. During my math degree at Bryn Mawr College, I was very interested in elliptic curve cryptography and I&rsquo;ve been meaning to pick up this subject again (once time and work allows!) In addition to the maths-y part of crypto, I wanted to know more about the way crypto is implemented and the kinds of exploits that are possible against cryptosystems.</p>
+
+<p>Our instructor Marion Videau had asked us to prepare for the bootcamp by writing down our expectations for the course. Mine were related to practical aspects: how do people find vulnerabilities in crypto systems, what kind of vulnerabilities are currently known, how does TLS work (I should have probably looked this up a long time ago), what kinds of changes will happen in the crypto field once we enter the post-quantum computing era, what new advances are there in the field of homomorphic encryption and so forth. I also had a brief look at some cryptopals challenges.</p>
+
+<p>We started the workshop by taking a tour of the different levels of abstractions that a student of cryptography can encounter: hardware implementations, mathematical primitives, cryptographic mechanisms, protocols, cryptosystems etc. We then took a look at the TLS handshake between client and server and the aspects that go into establishing it and the kinds of questions one might ask when choosing a cryptographic system. We also went over in detail the basic building blocks of modern cryptosystems: symmetric and asymmetric ciphers, hash functions, MAC (message origin authentication), asymmetric signatures, crypto protocols and random sequence generation. I&rsquo;m going to be going over my notes in depth a bit later and publishing some more notes, because this is some seriously cool stuff!</p>
+
+<h2 id="introduction-to-return-oriented-programming">Introduction to Return Oriented Programming</h2>
+
+<p>The Return oriented programming (ROP) workshop led by <a href="https://twitter.com/chiliz16">chiliz</a> starts with a recap of/intro to buffer overflows. In short, a program that is susceptible to the buffer overflow vuln can be tricked to overwrite some areas in the stack with material of the attackers choosing - for example malicious shellcode. However, most modern systems are protected from code injection into the stack by Data Execution Prevention (DEP) mechanism which prevents those areas of the stack that a program can write to from being executed (the so called NX-bit is set). So since we cannot inject some external code into the stack when exploiting a buffer overflow and then execute it, we need to find a way to re-use code that already exists on the system. To get a shell access from a program, we can always reuse the <code>system</code> call which is available in <code>libc</code>. This leads us to <code>ret2libc</code> - a special case of ROP.</p>
+
+<h3 id="ret2libc">ret2libc</h3>
+
+<p>The basics of a ret2libc attack are encompassed in the following steps: find a buffer overflow in the target program, overwrite the return address on the stack with the address of a <code>libc</code> function, for example <code>system</code>, which will allow an attacker to get shell access. Then, when the function that is vulnerable to the buffer overflow tries to return control flow to its caller, instead of returning up the stack, we will execute whatever <code>libc</code> function is at the address we used to overwrite the return pointer.</p>
+
+<p>If we want our ret2libc attack to spawn a shell, we have to be able to pass an argument &ldquo;bin/sh&rdquo; to the <code>libc</code> function <code>system</code>. Since arguments are stored on the stack, we have to make sure to add &ldquo;/bin/sh&rdquo; at the location ESP+4 (offset of 4 from the register ESP) on 32-bit systems.</p>
+
+<p>How do we find the memory locations that point to <code>libc</code>, <code>system</code> and the string &ldquo;bin/sh&rdquo; so that we can insert these addresses into the stack?
+We can use the <code>vmmap</code> function in gdb to find the absolute address of <code>libc</code> or alternatively the <code>ldd</code> command. Once we have the absolute address of <code>libc</code>, we need to find the offset of the <code>system</code> function within <code>libc</code> so that we can compute the absolute address of <code>system</code> and write it to the stack. We also need to perform a similar computation for &ldquo;bin/sh&rdquo;. Knowing the addresses of these two things will complete the malicious payload we need to write to the stack to take control of the execution of the program after the buffer overflow. We can find the offset to <code>system</code> within <code>libc</code> using <code>readelf -s</code> and then grepping for system. The <code>-s</code> flag will return only the symbols so we don&rsquo;t have as much stuff to grep through. Using a similar fashion, we can find the offset to the string &ldquo;/bin/sh&rdquo; using <code>strings -tx /path/libc</code> and then grepping for <code>/bin/sh</code>. The <code>-t</code> flag tells <code>strings</code> to print the offset of the string and <code>x</code> option specifies that we want the offset to be in hexadecimal.</p>
+
+<p>At this point, the water is starting to get preeeettty deep for me (the newbie, who ended up in track 3), but I&rsquo;m still able to get shell access! Wohooo!
+Another workshop attendee was wondering how to pass command arguments to &ldquo;/bin/sh&rdquo; - for example so that one could automatically run some program without having to interact with a shell. Although we didn&rsquo;t get to the answer during the workshop, this would definitely be something cool to explore on my own!</p>
+
+<h3 id="ropgadgets">ROPgadgets</h3>
+
+<p>Now onwards to performing ROP on a 64bit program. Things are different here. For one, the register that holds the return pointer is different. I got a bit lost at this point, if I&rsquo;m honest! However, the tactic employed in carrying out a ROP exploit in the 64bit case is something called a ROP chain, which is built from little existing bits of code from the binary called ROPgadgets. These can be discovered by passing the exploited binary through the <code>ROPgadget.py</code> search engine. It&rsquo;s quite cool and a bit scary that you can glue together bits of the binary to cause an exploit!</p>
+
+<h2 id="introduction-to-windows-kernel-debugging">Introduction to Windows Kernel Debugging</h2>
+
+<p>This workshop led by Gwaby was by far the most challenging one for me! Kernel internals! And on Windows, which is not my usual work environment. I was a bit poorly prepared for this workshop and for some reason the debug windbg environment I had setup on my Win10 machine was unable to talk to the Win10 debugee VM. After poking and prodding at the VM settings for the better part of an hour, I was able to find a forum post that suggested there may be some limitations on what data Win10 host will accept from a Win10 guest when the guest is using a NAT to connect to the internet and advised to try a host-only connection. Luckily, changing the VM debugee network settings to host only made the windbg connection work, but only towards the end of the workshop, so I have a lot of catching up to do! Expect some further posts on these topics very soon!</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/blackhoodie18-berlin-report/"><i class="fa fa-chevron-circle-left"></i> Blackhoodie18 Berlin Conference Report</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

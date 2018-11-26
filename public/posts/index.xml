@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Blackhoodie18 Berlin Bootcamp Report</title>
+      <link>http://blog.race-conditions.net/posts/blackhoodie18-berlin-bootcamp-report/</link>
+      <pubDate>Tue, 20 Nov 2018 18:17:24 +0000</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/blackhoodie18-berlin-bootcamp-report/</guid>
+      <description>In my previous post I wrote a few notes about the Blackhoodie18 Conference day. In this post, I&amp;rsquo;ll do a brief overview of some of the topics that were covered in the two day (intensive!) bootcamp. For some reason(most likely I did not read the track descriptions closely enough), I applied to track 3. The name (on my way to rock as hell) sounded super cool and I was really intrigued by the topics that were covered (intro to crypto, intro to Return Oriented Programming (ROP) and intro to Windows Kernel internals via building a keylogger).</description>
+    </item>
+    
+    <item>
       <title>Blackhoodie18 Berlin Conference Report</title>
       <link>http://blog.race-conditions.net/posts/blackhoodie18-berlin-report/</link>
       <pubDate>Tue, 20 Nov 2018 18:17:24 +0000</pubDate>
