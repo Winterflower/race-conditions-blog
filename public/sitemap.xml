@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>http://blog.race-conditions.net/posts/mobile-prototyping-with-flask/</loc>
+    <lastmod>2018-11-01T17:50:58+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/</loc>
     <lastmod>2018-10-26T21:26:40+01:00</lastmod>
   </url>

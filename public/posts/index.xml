@@ -40,6 +40,15 @@
     </item>
     
     <item>
+      <title>Mobile Web App Prototyping With Flask</title>
+      <link>http://blog.race-conditions.net/posts/mobile-prototyping-with-flask/</link>
+      <pubDate>Thu, 01 Nov 2018 17:50:58 +0000</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/mobile-prototyping-with-flask/</guid>
+      <description>A big chunk of traffic for any modern web application comes from mobile devices and so developing with smaller screensizes and touch screen controls in mind is imperative when building a startup MVP. This was my first mistake when I started developing the visual colour search engine lipcolourmatch.com. As a developer my work environment is the desktop and so naturally the first iteration of the Flask application was built with the desktop in mind.</description>
+    </item>
+    
+    <item>
       <title>Working With Kubernetes Deployments</title>
       <link>http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/</link>
       <pubDate>Fri, 26 Oct 2018 21:26:40 +0100</pubDate>

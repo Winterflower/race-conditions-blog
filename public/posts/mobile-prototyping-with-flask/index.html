@@ -1,0 +1,128 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Mobile Web App Prototyping With Flask</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-11-01T17:50:58Z">Nov 1, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>4 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p>A big chunk of traffic for any modern web application comes from mobile devices and so developing with smaller screensizes and touch screen controls in mind is imperative when building a startup MVP. This was my first mistake when I started developing the visual colour search engine <a href="http://lipcolourmatch.com">lipcolourmatch.com</a>. As a developer my work environment is the desktop and so naturally the first iteration of the Flask application was built with the desktop in mind. However, most users of modern beautytech applications are on mobile and that share will probably only increase in the future. In fact, now, after running lipcolourmatch.com in production for over two months, the number of non-mobile visits probably account for less than a fifth of the traffic the colour search engine receives on a daily basis.</p>
+
+<p>An additional complication is that my technical expertise prior to building <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> was mostly in the domains of machine learning and data engineering, with a few large scale server side applications. I had never built, deployed and managed an external consumer facing application. Although a user is a user (whether an external consumer or an internal company consumer), there is usually more flexibility when working with internal users, because you are usually onsite providing support and seeing your UX disasters first hand (UX is important!). Given my experience is primarily busting out a commandline and my trusted Linux shell commands when things get hairy, many mistakes (of which not being mobile-first from the beginning) were made in the initial prototypes for <a href="http://lipcolourmatch.com">lipcolourmatch.com</a>. For the benefit of anyone else (or for future me), I&rsquo;m writing up notes on mobile prototyping with Flask.</p>
+
+<h3 id="using-different-templates-for-desktop-and-mobile">Using Different Templates for Desktop and Mobile</h3>
+
+<p>Interacting with a web app on the desktop is usually done with a mouse or the equivalent in assistive technologies, whereas interacting with an application on mobile usually happens through touch-enabled interfaces (for example a touch screen). This means that some elements which are easy to navigate with a mouse, can be extremely frustrating to do on a touch screen (or with assistive technologies - colour search engine accessibility is something I am still researching and I hope to write up my findings at a later time!). A prime example of this when it comes to colour search engines is the colour picker. Most open source jQuery colour pickers are meant for desktop interaction and come with very small &ldquo;active areas&rdquo; (the areas you&rsquo;re supposed to click on to get the colourpicker to do what you want) and so are unsuitable for mobile.</p>
+
+<p>Given these two different modes of interaction, it&rsquo;s sometimes necessary to write two different Jinja templates - one for the mobile app and another for desktop users. This is probably not <em>How One Should Do It In Production &trade;</em> and I&rsquo;m still doing lots of research on how to approach building desktop+mobile webapps, but can be suitable for an MVP for beta users. After you have written up separate templates for mobile and web - you need to decide how to redirect requests from mobile clients to the mobile version and desktop clients to the desktop version.</p>
+
+<p>A Flask extension that I found useful for this is <a href="https://flask-mobility.readthedocs.io/en/latest/">Flask_Mobility</a>. It detects whether the request is coming from a mobile user agent and redirects the request to the correct mobile template.</p>
+
+<p>A given Flask view function normally only returns one template file, so keeping separate files for mobile and non-mobile user agents would mean lots of code duplication. However, <code>Flask_Mobility</code> provides decorators that allow you to specify the location of the mobile template. When the view functions detects that a mobile user agent is requesting a view, it will return the mobile template instead of the desktop template.
+In practice, when using <code>Flask_Mobility</code>, a sample mobile-desktop dual view function would look something like this</p>
+
+<pre><code>@app.route('/someviewfunc', methods=['GET', 'POST'])
+@mobile_template('{mobile/}index.html')
+def index(template):
+    # your view function logic goes here
+    return render_template(template)
+
+</code></pre>
+
+<p>Your mobile templates would go into <code>templates/mobile</code> and your regular desktop templates will stay in the <code>templates</code> folder.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/"><i class="fa fa-chevron-circle-left"></i> Working With Kubernetes Deployments</a>
+        </li>
+        
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/what-makes-a-good-technologist/">What Makes a Good Technologist <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
