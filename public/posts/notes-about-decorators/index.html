@@ -1,0 +1,169 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Notes About Decorators</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-12-06T19:14:10Z">Dec 6, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>2 min read</li>
+    </ul>
+</aside>
+    
+
+    <p>Decorators are one language feature in Python that I frequently use as a consumer of libraries and frameworks such as Flask but rarely implement myself. It&rsquo;s time to revisit this feature! Thank you very much to Mark Lutz&rsquo;s discussion in the 5th Edition of
+<em>Learning Python</em>. All mistakes are my own and feedback and comments are always appreciated.</p>
+
+<p>Decorators are a way to augment Python functions and classes. They do this by providing a syntax that allows us to associate code that should be run before/after a call to a function or a class. Let&rsquo;s take a look at an example. Suppose we want to print &lsquo;hello world&rsquo; before every call to then function <code>hello</code>. Functions are first class objects in Python, which means that you can pass them in as arguments to other functions. Let&rsquo;s take advantage of this feature to develop a helper function to achieve our goal.</p>
+
+<pre><code>def helperfunc(dec_func):
+    &quot;&quot;&quot;
+    Accepts the function to be decorated `dec_func`
+    and returns a wrapper function
+    &quot;&quot;&quot;
+    def wrapper(*args):
+        print('hello world')
+        dec_func(*args)
+    return wrapper
+
+</code></pre>
+
+<p>The function we want to wrap is below:</p>
+
+<pre><code>def hello():
+    print('Hello, how are you?')
+    
+</code></pre>
+
+<p>It simply prints some characters :).
+Now, if we want to augment the function <code>hello</code>, we can pass it into the helper function <code>helper_func</code>. As you can see from the code above, <code>helper_func</code> returns another function - <code>wrapper</code> that will call the function we pass into <code>helper_func</code> as an argument and will also print &lsquo;hello world&rsquo;.</p>
+
+<pre><code>decorated_func = helperfunc(hello)
+</code></pre>
+
+<p>We now have a new function! <code>decorated_func</code> will call our function <code>hello</code>, but will also print out the extra <code>hello world</code>!</p>
+
+<p>This is all well and great, but suppose we have some downstream client libraries that are expecting a function called <code>hello</code>. Because of the way namebinding works in Python, we can simply bind the new decorated function <code>decorated_func</code>  to the variable <code>hello</code>.</p>
+
+<pre><code>hello = helperfunc(hello)
+</code></pre>
+
+<p>This is the result when we call <code>hello</code>:</p>
+
+<pre><code>&gt;&gt;&gt; hello()
+hello world
+Hello, how are you?
+</code></pre>
+
+<p>This is cool! But writing</p>
+
+<pre><code>hello = helperfunc(hello)
+</code></pre>
+
+<p>around all of the functions we wish to decorate would be tedious. To help us avoid this tedium, we have the decorator syntax. We simply decorate the function <code>hello</code> like this</p>
+
+<pre><code>@helperfunc
+def hello():
+    print('Hello, how are you?')
+    
+</code></pre>
+
+<p>And voila - we&rsquo;ve just written our first decorator!</p>
+
+<p>We should also note that this would work also in the case where the decorated function accepts arguments.</p>
+
+<pre><code>@helperfunc
+def hello_name(name):
+    print('Hello, ', name)
+</code></pre>
+
+<pre><code>&gt;&gt;&gt; hello_name('Charlene')
+hello world
+Hello, how are you  Charlene
+
+</code></pre>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/blackhoodie18-berlin-bootcamp-report/"><i class="fa fa-chevron-circle-left"></i> Blackhoodie18 Berlin Bootcamp Report</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
