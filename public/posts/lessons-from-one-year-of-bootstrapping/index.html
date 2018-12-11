@@ -1,0 +1,153 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Lessons From One Year of Bootstrapping</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-11-26T21:18:32Z">Nov 26, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>8 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<h2 id="if-they-don-t-give-you-a-seat-at-the-table">If they don&rsquo;t give you a seat at the table&hellip;</h2>
+
+<p>Last July I decided to take a plunge and try to start a technology company. It felt like a idea good time: I felt that I had come to a standstill in my current software engineering role and needed a new challenge. While &lsquo;needing a new challenge&rsquo; on its own is not a good enough reason to take the financial and career risk that is trying to create a company, I wanted to see if maybe trying to forge my own opportunities would be better than trying to knock down doors that were closed to me. I suppose in a way, this was me trying to bring my folding chair to the table.</p>
+
+<p>It would have definitely been smarter to stay in the industry for a bit longer, for research shows that inspite of our image that a successful startup founder is a 20-something hacker in his college dorm/parents garage, most of the successful company founders are in their 30s and 40s. Presumably more experience in an industry helps in forming the B2B sales channels that a new company will need to generate cashflow. However, I felt that now, before I had financial commitments or dependents, would be a good idea to try out some of my own ideas and see where they go.</p>
+
+<p>The tech industry is mired in mythology of entrepreneurship. Our industry publications are filled with more and more extravagant stories of venture capital funding, exits, IPOs, betting on which companies will break the unicorn ceiling next. &ldquo;Startup&rdquo; is its own culture and startup CEOs have their own fanclubs. If you move in these crowds, you&rsquo;ll soon learn to speak in the language of series A-D, valuations and the obsession to &lsquo;disrupt everything&rsquo;. From the beginning, I knew that this would not be the path for me. I have neither the university names nor stints at the Big Four to bolster my chances of ending up in the portfolios of Sand Hill Road VC companies. So it would be bootstrapping from the get-go! For a bit over a year, I&rsquo;ve developed products based on a few business ideas I&rsquo;ve had, tested the market and tried to monetize them. Below are some of the lessons that I&rsquo;ve learnt in one year of being an small tech business.</p>
+
+<h2 id="wear-all-the-technology-hats-all-the-time">Wear all the technology hats all the time</h2>
+
+<p>Most software teams in companies that I have worked for are organized to allow every person on a team to specialise in a particular area or technology. For example, one person in the team specialises in front end technologies, another in UX design, and another in the backend component and perhaps another in QA, testing and perhaps one in security. As a solo developer, you have to wear all those hats at once: design the backend, deploy it onto a cloud provider, do a security analysis and harden the app, write automated tests, code the user interface and think about things such as accessibility, design and user experience.</p>
+
+<p>There are certainly those folks in our industry who are comfortable generalists, able to smoothly sail from optimising an SQL query to implementing a responsive website to writing YAML files for a Kubernetes deployment, but I am most definitely not one of them. My expertise lies in building backend/server-side components for processing data and deploying them onto a cloud provider&rsquo;s infrastructure (usually in a containerised form to a platform such as AWS&rsquo; ECS or Google&rsquo;s Kubernetes Engine), so doing a deep dive into the world of designing user interfaces that are easy to use was a challenge!</p>
+
+<p>I had to dust off my rusty CSS and Javascript skills and read up a lot on designing user experiences. What made this aspect even more challenging, was that a huge chunk of traffic these days comes from mobile devices and designing a user interaction experiences for smaller screens can be very challenging - in particular, if you want to re-use parts of your existing frontend codebase.</p>
+
+<p>The fun doesn&rsquo;t stop once you&rsquo;ve got your MVP. Now, you have to put on your DevOps hat on: think about CI/CD, deployment, monitoring and alerting!</p>
+
+<h2 id="build-it-and-they-won-t-come">Build It and They Won&rsquo;t Come</h2>
+
+<p>The hardest part is just starting out they said. Build it and they will come they said. Well, build it and they might come is closer to the truth. There are lots of cool technology projects out there that are great fun to code, but don&rsquo;t have any market demand. So it&rsquo;s important to test out your idea early and do it often. Find the places where your target audiences hang out online and test out the waters. If you are targeting the B2B market, identify who your customers are going to be: big companies, small and medium sized companies, or startups. Will your customers be other tech companies or companies from other industries? How do the people responsible for technology purchases in those companies discover new products? Is it from conference talks or blogposts? Industry publications? Meetups? Magazines?</p>
+
+<p>Building up traffic for your app can be a slow process and this is especially important for businesses that are planning to use the affiliate model to generate revenue: have a runway and be prepared to try out different strategies to get traffic.</p>
+
+<h2 id="you-might-have-to-pivot-more-than-once">You Might Have to Pivot More than Once</h2>
+
+<p>Be prepared to be disappointed. Even some really cool ideas don&rsquo;t pan out in the end. Some ideas are just too far out there for a company or a consumer to pay you for it. I started Synbyote with an idea of making an on-demand synthetic data company. The goal was to see if there was a market for synthetic datasets that companies could use to benchmark and test their machine learning software. I knew that something similar was out there in the market already - a website called <a href="https://mockaroo.com/">Mockaroo</a>, with a paid plan and a per row of data pricing model, which I thought very interesting. I decided to try a similar pricing model for synthetic data.</p>
+
+<p>My first mistake was to deep dive into coding without doing any customer interviews or market research. After a month or so of researching technologies and developing an app that allowed users to generate a timeseries dataset with custom anomalies, I started looking for machine learning companies that would be willing to try out synthetic datasets to benchmark their anomaly detection algorithms. I had lots of nice customer interviews with companies in the Ops and Security space, but ultimately this concept was too novel and there was no demand for it.</p>
+
+<p>I then dived deep into the world of cloud based data science environments. I started working with JupyterHub, a component that creates and authenticates single user Jupyter notebook servers. This makes it easy to host server side environments for large groups of people: for research and data science teams and for classrooms. This journey led me to learn more about cloud computing platforms from the three big providers: Google Cloud, Azure and AWS. I deployed JupyterHub on Kubernetes instances on all three and presented my findings at PyData London and PyData Amsterdam.</p>
+
+<p>This time I was wiser. I started doing customer interviews often and early. I talked to teams and companies and Jupyter users at conferences. There was a lot of interest, especially from the academic side. Unfortunately, none of this resulted in immediate cashflows and it proved too expensive to run the demo Kubernetes clusters.</p>
+
+<p>A few months after my JupyterHub project, I started working on visual colour search engines. I read up on computer vision techniques for identifying sections of images and machine learning algorithms for colour segmentation and started building a colour similarity index of makeup products I might want to try at some point in the future. The culmination of this work (described on my company website synbyote.io) is the colour search engine <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> which helps users discover new lip colour products.</p>
+
+<h2 id="there-will-be-admin-lots-of-it">There will be admin. Lots of it.</h2>
+
+<p>Companies need to file taxes and payroll and register for a whole bunch of things. This will be your responsibility. You will need to maintain the website and pay the web hosting bills, maintain accounts and make sure they are correct and accurate. This will consume a nontrivial amount of time.</p>
+
+<p>Bootstrapping usually means doing contracts to fund further development of your startup. Finding new contracts, contacting recruiting agencies, navigating the resulting paperwork and interviewing for roles will take up a nontrivial amount of time. There will be stressful times when you will get rejected from a contract you thought was surely yours. Things that seem doable with a fulltime permanent job (such as getting a rental apartment in a high-demand city like London) will be harder since you won&rsquo;t pass the automate &lsquo;fully employed&rsquo; checkbox many agencies and lanlords require.</p>
+
+<h2 id="learn-marketing-and-sales">Learn marketing and sales</h2>
+
+<p>No matter how much we want the world to love our nascent startup idea, it won&rsquo;t happen without effort. This is where marketing and sales come in. Yes, if you want to make money off your technology, you will have to do marketing: write that blogpost, attend that conference, speak to your users, find out what they think about your product. If you are working with companies, you will have to do sales: negotiate deals, help your customers integrate your product and so forth. Code, usually, does not sell itself.</p>
+
+<h2 id="would-i-do-it-all-again">Would I do it all again?</h2>
+
+<p>I probably would! I got to explore lots of new avenues, a feel for what it is like to be responsible for a real product with real users, a feel for prioritising ideas (as a solo developer you are extremely limited in time, so you have to strike the right balance between addressing tech debt, doing marketing and sales and implementing new features) and got to feel a sense of accomplishment for creating a product that is very useful for a niche audience!</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/blackhoodie18-berlin-bootcamp-report/"><i class="fa fa-chevron-circle-left"></i> Blackhoodie18 Berlin Bootcamp Report</a>
+        </li>
+        
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/notes-about-decorators/">Notes About Decorators <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
