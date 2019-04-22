@@ -86,6 +86,15 @@ Decorators are a way to augment Python functions and classes. They do this by pr
     </item>
     
     <item>
+      <title>On Trust</title>
+      <link>http://blog.race-conditions.net/posts/on-trust/</link>
+      <pubDate>Thu, 12 Jul 2018 00:40:08 +0100</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/on-trust/</guid>
+      <description>At a recent retrospective, the team was asked to reflect on the Agile values: Trust, Focus, etc. I was interested to see that trust had come up. In particular, it made me think about the Code Review process and how we, as developers, are often extremely quick to jump to conclusions about a technical decisions that to us seems &amp;lsquo;silly&amp;rsquo;, &amp;lsquo;stupid&amp;rsquo;, &amp;lsquo;idiotic&amp;rsquo;, &amp;lsquo;why would you do that&amp;rsquo; and how this manifests itself in the comments we give to each other during code reviews.</description>
+    </item>
+    
+    <item>
       <title>Notes on Interviewing for Python Developer Roles</title>
       <link>http://blog.race-conditions.net/posts/notes-on-interviewing-python/</link>
       <pubDate>Fri, 15 Jun 2018 14:25:58 +0100</pubDate>
