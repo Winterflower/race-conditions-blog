@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/</loc>
+    <lastmod>2019-01-09T17:58:59+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.race-conditions.net/posts/notes-about-decorators/</loc>
     <lastmod>2018-12-06T19:14:10+00:00</lastmod>
   </url>
@@ -59,13 +64,13 @@
   
   <url>
     <loc>http://blog.race-conditions.net/posts/</loc>
-    <lastmod>2018-12-06T19:14:10+00:00</lastmod>
+    <lastmod>2019-01-09T17:58:59+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://blog.race-conditions.net/</loc>
-    <lastmod>2018-12-06T19:14:10+00:00</lastmod>
+    <lastmod>2019-01-09T17:58:59+00:00</lastmod>
     <priority>0</priority>
   </url>
   

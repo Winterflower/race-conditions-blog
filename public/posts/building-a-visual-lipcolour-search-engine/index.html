@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Building a Visual Lipcolour Search Engine</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2019-01-09T17:58:59Z">Jan 9, 2019</time>
+        </li>
+        
+        
+
+        
+
+        <li>6 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p>Last April, I had an idea for a new kind of search engine that would help me solve a minor problem I&rsquo;d had a few months before. Those who have seen me in person can probably guess that I am no stranger to outlandish and sometimes experimental lipcolours and so in my quest to create more and more outlandish liplooks (for funzies), I&rsquo;d spend more and more time a) seeing pictures of cool liplooks and wonder &lsquo;what lipcolour is that person wearing?&rsquo; and b) pointlessly trawling brand websites trying to find a match for a specific colour I was interested in. I decided to see if it would be possible to write a colour search engine to suggest me a list of lipstick products based on a sample colour I&rsquo;d choose from a colourpicker. The result is <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> - a lipcolour search engine and finder that&rsquo;s proven to be useful to lots of people in the beauty and makeup communities. Seeing an app you&rsquo;ve made be super useful to lots of people is probably one of the most rewarding things a software engineer can experience! In this post, I&rsquo;m going to give a high level overview of the development process and the lessons learnt. I won&rsquo;t go into too much technical depth at this point, but will leave that for another post some time in the future.</p>
+
+<h3 id="building-an-index">Building an index</h3>
+
+<p>First thing first: you have to have something to search - an index of documents. In this case, our index is composed of two main things of interest: the name of the lipcolour product and an it&rsquo;s colour in a colour space of one&rsquo;s choosing. The first default choice in many people&rsquo;s minds is probably to use RGB to represent the colours, but this turns out to be a less than optimal choice for many use cases. The ultimate goal of a colour search engine is to get a colour that a user wants to query and then find a set of results closest to the queried colour. In order to perform this calculation, we need to represent the colour in CIELab space - a colourspace where the distance between two colour more closely represents their perceived distance to the human eye.</p>
+
+<p>I spent quite a lot of time searching the web for colour conversion libraries or some sample code and in the end ended up trying out some formulas from Wikipedia and a few other sites. I compared the results from the search engine using CIELab and the results from RGB and concluded that for most of the popular lipstick colours, computing the distances in RGB space was enough to give accurate and useful results to the users. However, I have noticed that for some of the more pastel shades, distance comparison in RGB space gives results that are slightly counterintuitive, so I plan to revisit this question very soon when time allows.</p>
+
+<h3 id="the-devil-is-in-the-user-interface">The devil is in the user interface</h3>
+
+<p>The user interface is probably the most important component in a search engine. My initial inspiration for what the lipcolourmatch.com
+search interface would look like was the simple and slimmed down design of the Google landing page: plain with an interesting graphic and a search bar and preferably an autocomplete option. The only problem here was that the input to my search engine was a colour and Google&rsquo;s inputs (unless you count reverse image search) are mainly textual. Of course, it is possible to allow users to type in a colours name or RGB or hex value, but this would make it a bit harder for users who are not used to these representations, to use the search engine. Thus started my foray into the world of colour pickers.</p>
+
+<p>There are many to pick from! However, most of them have visual designs that quite closely resemble the colour pickers in image processing programs and are what one could call highly information rich: they offer multiple different colour spaces (RGB, HSV etc), show conversions between RGB and hex values and so forth and I decided that including all of that information in the user interface, would, at first be too much. Furthermore, presumably because colour pickers are most often included in desktop applications, many of them had user interfaces that I determined would be a bit too hard to use with a mobile, touch-enabled interface. Finally, I found an open source library that satisfied all of my requirements: <a href="https://iro.js.org/">iro.js</a>. As a plus, the default design included a colour picker circle, which reminded me of compact mirrors and thus appeared to fit the theme quite well.</p>
+
+<h3 id="mobile-application-development">Mobile application development</h3>
+
+<p>When I first started discussing the idea of building a visual lipcolour search engine on Twitter, a few folks suggested that most of my traffic would come from mobile devices. Because I had very little previous experience developing web applications let alone mobile web applications, I had two choices: spend a few months trying to read up on mobile development or try to develop something for the desktop and then try to cobble together a passable mobile version. I have little appetite for building things that don&rsquo;t work properly, so I opted to go with the former option first. After some time researching mobile development online, I was overwhelmed with the amount of technology choices and frameworks out there. Even the state of frontend development had moved on from &ldquo;link to a singe javascript file in my html&rdquo; to transpilers, multiple versions of ES, frameworks etc. It was mindboggling and I could have probably spent the next year or two going through thousands of &ldquo;Getting Started&rdquo; documents and not getting really anywhere beyond the basics. So in the end, I decided, that I could take a small (or maybe not so small hit) with the quality of the product as long as I got something shipped for users.</p>
+
+<p>So I started developing a desktop application using technologies I was most familiar with. It soon became clear that (probably due to my own incompetence in front end development), I would somehow need to have separate layouts for mobile and desktop applications and direct users from one to the other depending on which device they were using to access the app. For the MVP, I solved this problem by using a Flask extension (I wrote a bit about how it works <a href="https://blog.race-conditions.net/posts/mobile-prototyping-with-flask/">here</a>) called <code>Flask_Mobility</code>. I am still doing research on how to improve on my approach!</p>
+
+<h3 id="the-user-experience-of-search">The user experience of search</h3>
+
+<p>The rise of popular search engines (we all know who they are) has trained consumers of technology to a certain user experience: fuzzy matching, spelling correction and autocomplete with search suggestions. I noticed fairly quickly that making a search bar that depended on users getting the name and brand of a specific lipstick exactly correct was not going to work. I hoped that the introduction of an autocomplete bar would make the implementation of search easier on the backend and reduce the number of searches that led to empty search results (and thus probably disappointed users). However, production experience soon taught me that many (in particular many mobile users) did not click on the autocomplete result, but instead proceeded directly to hit &ldquo;Search&rdquo;. I suppose this is because the workflow in many search engines like Google does not require clicking on the desired item from the dropdown. Thus, my next step is to find a way to implement a good fuzzy search workflow without introducing too much new technology into the stack.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/notes-about-decorators/"><i class="fa fa-chevron-circle-left"></i> Notes About Decorators</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

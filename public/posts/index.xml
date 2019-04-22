@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Thu, 06 Dec 2018 19:14:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jan 2019 17:58:59 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building a Visual Lipcolour Search Engine</title>
+      <link>http://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/</link>
+      <pubDate>Wed, 09 Jan 2019 17:58:59 +0000</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/</guid>
+      <description>Last April, I had an idea for a new kind of search engine that would help me solve a minor problem I&amp;rsquo;d had a few months before. Those who have seen me in person can probably guess that I am no stranger to outlandish and sometimes experimental lipcolours and so in my quest to create more and more outlandish liplooks (for funzies), I&amp;rsquo;d spend more and more time a) seeing pictures of cool liplooks and wonder &amp;lsquo;what lipcolour is that person wearing?</description>
+    </item>
     
     <item>
       <title>Notes About Decorators</title>
