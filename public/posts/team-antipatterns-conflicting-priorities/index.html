@@ -59,12 +59,14 @@
 
         
 
-        <li>4 min read</li>
+        <li>5 min read</li>
     </ul>
 </aside>
     
 
     
+
+<p><em>A side-channel attack on developer productivity.</em></p>
 
 <p>I&rsquo;ve been around the tech industry block a few times now, first as a QA engineer, then a data engineer, then a
 software engineer and afterwards as an independent software contractor and consulting business owner.
@@ -77,19 +79,21 @@ from reading this.</p>
 
 <h3 id="conflicting-priorities">Conflicting Priorities</h3>
 
-<p>A typical software team has one or more stakeholders. These are the folks, either inside or outside, the organisation
-that taken an interest in the teams work. Some stakeholders, like the team lead, the line manager, the product manager and the tech lead, work closely with the team and answer for the team&rsquo;s output to the higher level managers in the org. Other teams can be stakeholders too. For example, the frontend team may depend on a backend team or a data team when building a new user interface.
+<p>A typical software team has one or more stakeholders. These are the folks, either inside or outside the organisation,
+that taken an interest in the team&rsquo;s work. Some stakeholders, like the team lead, the line manager, the product manager and the tech lead, work closely with the team and answer for the team&rsquo;s output to the higher level managers in the org. Other teams can be stakeholders too. For example, the frontend team may depend on a backend team or a data team when building a new user interface.
 Another group of stakeholders can be internal users. All of these groups have their own priorities and workflows that depend on the work output of the engineers on the software team.</p>
 
 <p>In this post, I&rsquo;m specifically going to focus on the three stakeholders closest to the team (in terms of org-chart proximity, which often translates to closest in terms of day-to-day business): the team lead, the tech lead and the product manager. In this case, the team lead is responsible for managing the backlog and prioritising work (in the official project management system), the tech lead is responsible for technical aspects of the platform and the product manager works on the, well, the product.</p>
 
-<p>If these three stakeholders are in agreement on the direction of the product, the technical strategy and the priority of each item, the things should, in theory, work pretty smoothly. In an agilesque manner, work will be scoped into suitable chunks, tickets will be drafted and scoped, accetance criteria will be written and tickets will be assessed in terms of how long each will take. Then they will be prioritised and assigned.</p>
+<p>If these three stakeholders are in agreement on the direction of the product, the technical strategy and the priority of each item, then things should, in theory, work pretty smoothly. In an agilesque manner, work will be scoped into suitable chunks, tickets will be drafted and scoped, accetance criteria will be written and tickets will be assessed in terms of how long each will take, what risks are associated with the changes, how big are the changes, who will they affect and whether or not we have done something similar before. Then they will be prioritised and assigned to team members.</p>
 
-<p>However, if the three have different ideas about what the team should be doing, things quickly become chaotic. The standard procedure for determining the scope of technical work is bypassed in lieu of email and slack messages asking someone to urgently pick up this task, which, in turn, leads to a confusion. When should this be done by? Is this of a higher priority than the task I am currently working on? Should I stop my current work in favour of completing the task that was just posted in the Slack channel?</p>
+<p>However, if the three have different ideas about what the team should be doing, things quickly become chaotic. The standard procedure for determining the scope of technical work is bypassed in lieu of email and Slack messages asking someone to urgently pick up this task, which, in turn, leads to a confusion. When should this be done by? Is this of a higher priority than the task I am currently working on? Should I stop my current work in favour of completing the task that was just posted in the Slack channel?</p>
 
 <p>These tasks often lack clear acceptance criteria and thus require multiple rounds of back and forth communication, which for asynchronous teams, can mean a timespan of days before what needs to be done for the task is clarified. In the same timespan, newer tasks from other stakeholders will arrive in the form of messages and emails and someone will need to pick up an extra few plates to spin, while also spinning existing plates and tending to a few fires. Things get done, but they get done at a slower pace, because constant context switching from one task to another (even from two trivial tasks like updating dependencies in two Python repos) requires manual steps.</p>
 
 <p>The result is a constant state of busy - trying to complete a few big chunks of work while also picking up the constant stream of small tasks that arrive via messages - without producing things that are complete, well-tested and can be shipped to customers. The secondary result is a constant slight stress in team - which stakeholder&rsquo;s task am I supposed to be working on? If I choose to complete the work I was assigned first and then pick up this task, will that reflect badly on my performance?</p>
+
+<p>If this is happening in the team, it is probably time to have a retrospective, agilesque or not, you choose. The stakeholders should come to an agreement about a flexible roadmap (always works in theory, rarely in practice, hence the flexible part), which is hopefully a compromise of each of their priorities. The completed projects should be listed and refined. The technical challenges and sketches of solutions should be discussed with the tech lead. After this, the work can be scoped and the assigned engineer can focus on the implementation. A check-in retrospective should be scheduled for a later date and the team should assess whether the current way of doing things is better than the previous one. If there is evidence that in spite of the process, tasks keep creeping into the workflow through side-channels like Slack and email, another conversation should take place. While we, the children of the many faces of agile, often say &lsquo;people over process&rsquo;, it doesn&rsquo;t mean that all process is bad. We shouldn&rsquo;t be married to a particular process just for the sake of the process, but some sort of process is necessary to ensure focus.</p>
 
 
 </article>
