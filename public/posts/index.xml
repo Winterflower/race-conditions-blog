@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Wed, 09 Jan 2019 17:58:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Apr 2019 18:28:10 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Team Antipatterns: Conflicting Priorities</title>
+      <link>http://blog.race-conditions.net/posts/team-antipatterns-conflicting-priorities/</link>
+      <pubDate>Tue, 23 Apr 2019 18:28:10 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/team-antipatterns-conflicting-priorities/</guid>
+      <description>I&amp;rsquo;ve been around the tech industry block a few times now, first as a QA engineer, then a data engineer, then a software engineer and afterwards as an independent software contractor and consulting business owner. Although all of this has happened in the span of a bit over four years, I&amp;rsquo;ve learnt a lot about the different kinds of teams that develop software. In this &amp;ldquo;Team Antipatterns&amp;rdquo; series, I&amp;rsquo;d like to make notes and highlight some (perhaps obvious) things that I&amp;rsquo;ve encountered during my time in tech.</description>
+    </item>
     
     <item>
       <title>Building a Visual Lipcolour Search Engine</title>
