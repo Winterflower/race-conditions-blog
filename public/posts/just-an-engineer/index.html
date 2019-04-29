@@ -1,0 +1,171 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Just an Engineer and Technomyopia</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2018-07-17T21:54:15&#43;01:00">Jul 17, 2018</time>
+        </li>
+        
+        
+
+        
+
+        <li>6 min read</li>
+    </ul>
+</aside>
+    
+
+    <p><em>I initially started writing these notes last July after seeing <a href="https://royalsociety.org/science-events-and-lectures/2018/07/you-and-ai-equality/">Dr Kate Crawford speak at the Royal Society</a> on bias in machine learning. Unfortunately, I never had a chance to finish this blog post before moving out of London and in the chaos of packing up my belongings, I&rsquo;ve misplaced the notes that I took from the session. Thus there is no hope of me going in and revising this text until (if ever) I find my notes. Therefore, I&rsquo;ve chosen to publish this post as is with my apologies for any inconsistencies and inaccuracies as well as the abrupt ending. You can follow the link above to see a full recording of Dr Crawford&rsquo;s talk.</em></p>
+
+<p>The doors open at 7 pm but already at twenty five to the hour, the line of eager attendees stretches
+almost the full length of Carlton Terrace, a quiet street sandwiched between the private gardens of Waterloo place
+and the memorials to the Crimean War. The topic of tonight - bias in machine learning and AI is clearly on people&rsquo;s minds.
+Event organizer&rsquo;s from the Royal Society walk the length of the line and hand out red stickers until
+the auditorium reaches capacity.</p>
+
+<p>The speaker for tonight, the co-founder of the AI Now Institute and a Professor at New York University, Dr Kate Crawford
+opens her talk by stating that the automated decision systems we are building today (grouped under the hype
+umbrellaterm of AI) are inherently political. If the audience would be engineeers, no doubt right now
+there would be a massive groan. The closer we are to constructing the code that runs our machine learning systems,
+the more myopic we tend to become and thus removed from responsibility for our creations. We tend to think that
+if things can be reduced to matrix multiplications and gradient descents, they cannot possibly be biased.</p>
+
+<p>In her introduction, Dr Crawford talks about CalGang, the dataset that was used to build a predictive policing system
+to identify potential gang members. The problem of course was that the dataset used to train the algorithm was highly biased.
+Unless of course, it is possible for babies to be gang members. The real danger here, Crawford parahprases Weizenbaum, the
+invetor of the ELIZA machine, is that we will be seduced by AI, just like the early human testers of ELIZA were seduced
+and ignore the wider human implications of the systems we are building.</p>
+
+<p>In a novel definition of AI, Dr Crawford claims that AI is actually three things:
+a) technical approaches, social practices and industrial complexes. With technical approaches, cover everything
+from the early roots of &ldquo;intelligent decision making systems&rdquo; to machine learning methods and neural networks.
+Social practices are largely concerned with who works on AI problems, what AI problems and applications get prioritised
+and which populations are served by the tools that are produced by the latter two. She notes that the leaders in the
+industrial AI field like Facebook and Google are notorious for the monocultures in their demographic makeups.</p>
+
+<p>The last aspect and perhaps the one that people usually do not think about, is the industrial global computing
+complex that is needed to support even the simplest things that one can do with an AI application, such as
+issuing a voice command to an intelligent assistant. Crawford demonstrates a poster of the internal workings of Alexa
+and traces all of the steps that need to take place between issuing a voice command and Alexa responding. It takes
+an enormous infrastructure to maintain this, she remarks, and thus AI applications largely remain the domain of large
+corporations. Even the smaller cool startups are using their compute infratructure.</p>
+
+<p>In the second part of her talk, Dr. Crawford tackles the problem of bias in AI and claims that even though
+technical fixes have been attempted, there is no easy technical fix to the problem. Our society is flawed and a product
+of cultural and political hierarchies that through centuries have marginalised certain groups, races and genders.
+The datasets that have been produced by this history are deeply biased and when used to train algorithms will facilitate
+decision making that further increase this bias thus creating a feedback loop. She brings as an example, a Google image search
+of CEOs (all old white men in suits). Then Lena, the image of a Playboy model who becomes the most used image in
+computer science. The fact that a porn image is the most used image in computer science publications tells you who
+is in the room and what they are interested in, she says. All data sets have a social context and reflect the biases of our society.
+More examples include bias in word embeddings and sentiment analysis.</p>
+
+<p>So what can we do to fix this? Narrow, tech only approaches can actually do more harm than good, Crawford claims.
+The dominant techniques for eliminating bias is improving accuracy, scrubbing to neutral and getting data sets that
+mirror the demographics. But there are problems.</p>
+
+<p>For example, whose version of neutral should we accept when scrubbing the data? The world and society as they are today.
+Our society today is hardly neutral.
+The next issue is getting representative samples of demographics. Crawford brings up several examples of image databases which
+are used to recognize people&rsquo;s faces. The most overrepresented face is that of George W Bush, because the dataset was
+constructed by scrubbing news images during Bush&rsquo;s term in office. This of course means that any classifier trained on this
+dataset is doing to do better on white faces. So the solution, according to tech, would be to get a more representative
+image of people of colour.</p>
+
+<p>But does treating everyone equally mean justice? It is known that people of colour are more
+exposed to surveillance and doing this would expose them even more to the surveillance ecosystem. Parity is not justice.
+Machine learning depends on metrics, but it is hard to construct a judicial due process around atomated decision making
+because these black boxes are very often not open to inspection.
+Ask youself, does your technical approach to fixing the problem put more power in the hands of the powerful?</p>
+
+<p>In her final and perhaps most thoughtprovoking and damning section Dr. Crawford examines classification as power. In keeping with the theme of the venue, the Royal Society, she talks about John Wilkins and his obsession for classification, which eventually led
+phrenology and classifying people into classes and races based on facial measurements.
+One of the problems of research like this and research like that of Kosinski, who claimed he could predict
+human sexuality from facial features using just out of the box machine learning techniques. The problem according to Crawford is the attempt to reduce a complex, fluid human social behaviour to a set of binaries.</p>
+
+<p>This set of binaries, which dates from Aristotelian duality, was touched upon in the questions.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/on-trust/"><i class="fa fa-chevron-circle-left"></i> On Trust</a>
+        </li>
+        
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/">Working With Kubernetes Deployments <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
