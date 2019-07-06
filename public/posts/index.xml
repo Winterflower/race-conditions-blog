@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Tue, 23 Apr 2019 18:28:10 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jul 2019 09:09:02 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Experimenting With the Affiliate Business Model for Tech Microbusinesses</title>
+      <link>http://blog.race-conditions.net/posts/experimenting-with-the-affiliate-business-model-for-tech-microbusinesses/</link>
+      <pubDate>Sat, 06 Jul 2019 09:09:02 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/experimenting-with-the-affiliate-business-model-for-tech-microbusinesses/</guid>
+      <description>In our day and age, how does one make money from a niche search technology? This was a question I started thinking about last April when I was writing code for a colour similarity search engine for colour cosmetics. After I launched the demo version of lipcolourmatch.com, there was a flurry of traffic and I thought there might be an avenue to try and turn this into a business.</description>
+    </item>
+    
+    <item>
+      <title>Just an Engineer and Technomyopia</title>
+      <link>http://blog.race-conditions.net/posts/just-an-engineer/</link>
+      <pubDate>Mon, 29 Apr 2019 09:13:15 +0100</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/just-an-engineer/</guid>
+      <description>Published on Monday, 29th April, 2019. I initially started writing these notes last July after seeing Dr Kate Crawford speak at the Royal Society on bias in machine learning. Unfortunately, I never had a chance to finish this blog post before moving out of London and in the chaos of packing up my belongings, I&amp;rsquo;ve misplaced the notes that I took from the session. Thus there is no hope of me going in and revising this text until (if ever) I find my notes.</description>
+    </item>
     
     <item>
       <title>Team Antipatterns: Conflicting Priorities</title>
@@ -104,15 +122,6 @@ Decorators are a way to augment Python functions and classes. They do this by pr
       
       <guid>http://blog.race-conditions.net/posts/working-with-kubernetes-deployments/</guid>
       <description>When I first started working with Kubernetes Deployments, the defacto way to create a deployment was to write up some configuration into a YAML file and run kubectl --namespace=&amp;lt;somespace&amp;gt; apply -f &amp;lt;file&amp;gt;. This made it easy to make changes to the deployment later. Simply, make the required changes in the file and run kubectl --namespace=&amp;lt;somespace&amp;gt; apply -f &amp;lt;filename&amp;gt;. However, recently after following some Google Kubernetes Engine tutorials, I&amp;rsquo;ve gotten into a habit of creating deployments using the kubectl --namespace=&amp;lt;somespace&amp;gt; run command.</description>
-    </item>
-    
-    <item>
-      <title>Just an Engineer and Technomyopia</title>
-      <link>http://blog.race-conditions.net/posts/just-an-engineer/</link>
-      <pubDate>Tue, 17 Jul 2018 21:54:15 +0100</pubDate>
-      
-      <guid>http://blog.race-conditions.net/posts/just-an-engineer/</guid>
-      <description>I initially started writing these notes last July after seeing Dr Kate Crawford speak at the Royal Society on bias in machine learning. Unfortunately, I never had a chance to finish this blog post before moving out of London and in the chaos of packing up my belongings, I&amp;rsquo;ve misplaced the notes that I took from the session. Thus there is no hope of me going in and revising this text until (if ever) I find my notes.</description>
     </item>
     
     <item>

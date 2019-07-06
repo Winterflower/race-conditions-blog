@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://blog.race-conditions.net/posts/experimenting-with-the-affiliate-business-model-for-tech-microbusinesses/</loc>
+    <lastmod>2019-07-06T09:09:02+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.race-conditions.net/posts/just-an-engineer/</loc>
+    <lastmod>2019-04-29T09:13:15+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.race-conditions.net/posts/team-antipatterns-conflicting-priorities/</loc>
     <lastmod>2019-04-23T18:28:10+02:00</lastmod>
   </url>
@@ -53,11 +63,6 @@
   </url>
   
   <url>
-    <loc>http://blog.race-conditions.net/posts/just-an-engineer/</loc>
-    <lastmod>2018-07-17T21:54:15+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://blog.race-conditions.net/posts/on-trust/</loc>
     <lastmod>2018-07-12T00:40:08+01:00</lastmod>
   </url>
@@ -84,13 +89,13 @@
   
   <url>
     <loc>http://blog.race-conditions.net/posts/</loc>
-    <lastmod>2019-04-23T18:28:10+02:00</lastmod>
+    <lastmod>2019-07-06T09:09:02+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://blog.race-conditions.net/</loc>
-    <lastmod>2019-04-23T18:28:10+02:00</lastmod>
+    <lastmod>2019-07-06T09:09:02+02:00</lastmod>
     <priority>0</priority>
   </url>
   
