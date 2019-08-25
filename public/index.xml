@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Sat, 06 Jul 2019 09:09:02 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 25 Aug 2019 19:45:37 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Has the AI ethics debate forgotten human flourishing?</title>
+      <link>http://blog.race-conditions.net/posts/ai-ethics-and-human-flourishing/</link>
+      <pubDate>Sun, 25 Aug 2019 19:45:37 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/ai-ethics-and-human-flourishing/</guid>
+      <description>It seems that everyone these days is doing or at least talking about AI ethics or one of the closely related areas of transparency, fairness or interpretability (as an aside: although the field of machine learning model interpretability has been around for a while it has experienced a resurgence of interest due to the introduction of the General Data Protection Regulation (GDPR) in EU and the right to explanation, which it is said to confer to data subjects).</description>
+    </item>
     
     <item>
       <title>Experimenting With the Affiliate Business Model for Tech Microbusinesses</title>
