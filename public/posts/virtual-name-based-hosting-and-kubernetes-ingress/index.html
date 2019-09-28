@@ -1,0 +1,173 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Virtual Name Based Hosting and Kubernetes Ingress</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2019-09-28T15:58:08&#43;02:00">Sep 28, 2019</time>
+        </li>
+        
+        
+
+        
+
+        <li>4 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p><em>Someone on Twitter (if only Twitter search wasn&rsquo;t as bad as it is, I&rsquo;d be able to link to tweet here) recently said that one of the best tech career advice they had never followed was making it a rule to write a low-key, lightweight blogpost immediately after learning how to do a new thing.</em></p>
+
+<p><em>This hit close to home, since I&rsquo;m guilty of starting many of these lightweight blogposts and then leaving them half done in the drafts folder forever. When I encounter the same problem again a few months later, I only have half of the notes to refer to (happened recently when I needed to setup HTTPS for a service running on Google Kubernetes Engine).
+So I&rsquo;m trying to make it a habit to write low-key, lightweight blog posts more and more often. Take these more as &ldquo;field notes about X&rdquo; instead of &ldquo;how to do X&rdquo;.</em></p>
+
+<p>I recently started developing the first version of a colour search engine that allows users to search and browse complexion products like foundation, concealer and tinted moisturiser by colour and shade family (an early, extreme-beta version is now available here at <a href="http://complexion.lipcolourmatch.com">http://complexion.lipcolourmatch.com</a>). I decided to package up the code that serves this app in a separate Docker container from the container that houses the app for the main code for <a href="http://lipcolourmatch.com">lipcolourmatch.com</a>.</p>
+
+<p>After the container is built and uploaded into a private Google Cloud container repository, it&rsquo;s time to deploy the app on Google Kubernetes Engine. Previously, I was running the lipcolourmatch.com service by using a Google Cloud Load Balancer, but during my experiments with deploying HTTPS on Google Kuberneted Engine (GKE), I had to change over to using Kubernetes Ingress resources, because these would allow for setting up TLS configurations.</p>
+
+<p>Thus, before we embark on deploying a second application into the existing Kubernetes cluster, we have the following situation</p>
+
+<ul>
+<li>one deployment with X replica Pods running the main <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> site</li>
+<li>one service exposing the deployment for <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> so that it is accessible from the outside of the Kubernetes cluster (ie. you can navigate to the website with your browser). The service is of type <code>NodePort</code> (it used to be of type <code>LoadBalancer</code> before the HTTPS experiments which required using Kubernetes Ingress)</li>
+<li>one Ingress resource which directs traffic from outside of the cluster to the deployment that forms the backend of the <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> service</li>
+<li>HTTPS is configured on <a href="http://lipcolourmatch.com">lipcolourmatch.com</a></li>
+</ul>
+
+<p>The end goal we want to end up with is this:</p>
+
+<ul>
+<li>two deployments with X replica Pods. One deployment is running the original lipcolourmatch.com site, the other is running the complexion.lipcolourmatch.com site</li>
+<li>two services, one for lipcolourmatch.com, the other for complexion.lipcolourmatch.com</li>
+<li>a new Kubernetes Ingress that enables name-based virtual hosting, so that we can re-use the cluster&rsquo;s static IP address for two different apps</li>
+</ul>
+
+<h3 id="virtual-name-based-hosting-with-kubernetes-ingress">Virtual name-based hosting with Kubernetes Ingress</h3>
+
+<p>The <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting">official Kubernetes docs</a> have an example of what an Ingress configuration for virtual named-based hosting looks like (see link for full YAML before you make any configuration changes, mini-snippet below)</p>
+
+<pre><code>spec:
+  rules:
+  - host: foo.bar.com
+    http:
+      paths:
+      - backend:
+          serviceName: service1
+          servicePort: 80
+  - host: bar.foo.com
+    http:
+      paths:
+      - backend:
+          serviceName: service2
+          servicePort: 80
+</code></pre>
+
+<p>This needs to be edited to suit your own needs, for example changing the names in the <code>host</code> configs.
+In addition, since I had already configured TLS in my existing ingress, I needed to find out how to take this into account in the new Ingress configuration. <a href="https://docs.bitnami.com/kubernetes/how-to/secure-kubernetes-services-with-ingress-tls-letsencrypt/">Bitnami had this helpful example in their guide to configuring HTTPS on Kubernetes</a>, which shows that the <code>tls</code> block does not need to change when the <code>spec</code> block is changed to enable virtual name based hosting. I did try to follow their example of specifying which hosts the <code>tls</code> config applies (mini-snippet below, see <a href="https://docs.bitnami.com/kubernetes/how-to/secure-kubernetes-services-with-ingress-tls-letsencrypt/">link</a> for full config), but I didn&rsquo;t get it to work, so I just left the TLS config as is.</p>
+
+<pre><code>tls:
+- secretName: joomla-tls-cert
+    hosts:
+    - DOMAIN
+    - blog.DOMAIN
+</code></pre>
+
+<h3 id="full-walkthrough">Full walkthrough</h3>
+
+<p>Finally, we have these steps to go from our initial state of having one deployment and one service to having two services backed by two different backend configurations with an ingress tha redirects traffic to one of these depending on the domain in the request.</p>
+
+<ol>
+<li>Create Docker image with new service and push it to the Google Cloud repository</li>
+<li>Create a new deployment that runs this container in a Pod with the required number of replicas</li>
+<li>Expose the deployment as a service with the type <code>NodePort</code> and the correct target port</li>
+</ol>
+
+<pre><code>kubectl --namespace=yournamespace expose deployment deployment-name --target-port=5000 --type=NodePort
+</code></pre>
+
+<ol>
+<li>Modify the Kubernetes Ingress to enable virtual name-based hosting. You can use <code>kubectl edit</code> command, but since I didn&rsquo;t trust my YAML editing skills in Vim, I exported the configuration into a YAML file first using the <code>--export</code> flag and then running <code>kubectl replace</code> (I have some rough notes on this process <a href="https://blog.race-conditions.net/posts/working-with-kubernetes-deployments/">here</a>).</li>
+<li>Create a DNS record for the new domain - complexion.lipcolourmatch.com in my case with your Registrar</li>
+</ol>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/ai-ethics-and-human-flourishing/"><i class="fa fa-chevron-circle-left"></i> Has the AI ethics debate forgotten human flourishing?</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

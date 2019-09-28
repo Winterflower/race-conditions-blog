@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Sun, 25 Aug 2019 19:45:37 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 28 Sep 2019 15:58:08 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Virtual Name Based Hosting and Kubernetes Ingress</title>
+      <link>http://blog.race-conditions.net/posts/virtual-name-based-hosting-and-kubernetes-ingress/</link>
+      <pubDate>Sat, 28 Sep 2019 15:58:08 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/virtual-name-based-hosting-and-kubernetes-ingress/</guid>
+      <description>Someone on Twitter (if only Twitter search wasn&amp;rsquo;t as bad as it is, I&amp;rsquo;d be able to link to tweet here) recently said that one of the best tech career advice they had never followed was making it a rule to write a low-key, lightweight blogpost immediately after learning how to do a new thing.
+This hit close to home, since I&amp;rsquo;m guilty of starting many of these lightweight blogposts and then leaving them half done in the drafts folder forever.</description>
+    </item>
     
     <item>
       <title>Has the AI ethics debate forgotten human flourishing?</title>
