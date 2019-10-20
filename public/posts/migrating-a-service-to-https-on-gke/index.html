@@ -1,0 +1,295 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Migrating a Service to HTTPS on GKE</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2019-05-11T23:47:10&#43;02:00">May 11, 2019</time>
+        </li>
+        
+        
+
+        
+
+        <li>6 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p><em>Writer&rsquo;s note: Part of this blogpost was completed in October 2019 while renewing the certificates. These are rough notes, so please
+exercise care when doing any changes to your Kubernetes configs. Warning: some of the resources referenced in this blog post are paid resources on Google Cloud, so please exercise care!</em></p>
+
+<p>Migrating <a href="https://lipcolourmatch.com">lipcolourmatch.com</a> from HTTP to HTTPS has been on my to-do list on a long time.
+I made a few attempts on the project previously, but always gave up, because the bits and pieces in the Google Cloud
+Docs were scattered around and there was no clear, newbie-friendly walkthrough that I could use. The few times that
+I had tried to cobble a good strategy for myself using the docs, I&rsquo;d ended up borking <a href="https://lipcolourmatch.com">lipcolourmatch.com</a> and reverting my changes. Today, I came across a <a href="https://estl.tech/configuring-https-to-a-web-service-on-google-kubernetes-engine-2d71849520d">new write-up</a> on this topic from LH Fong. Since it outlined the required steps in an approachable manner, I decided to try it out myself! Reader, I&rsquo;m glad to day that after trials and errors, I have succeeded! In this blogpost, I want to outline the steps I went through and some of the issues I encountered as I went along. For the full write-up, please refer to LH Fong&rsquo;s article linked above.</p>
+
+<h3 id="starting-with-a-test-service">Starting with a test service</h3>
+
+<p>Previously, I&rsquo;d gone straight for messing with Kubernetes configuration in prod, which, at least for me, is not advisable. While not super heavily traffiked, <a href="https://lipcolourmatch.com">lipcolourmatch.com</a> does receive a steady flow of traffic and I don&rsquo;t want to subject users to unnecessary downtime. Thus it&rsquo;s better to start with a test service provided by the Google Cloud tutorials.
+Following the steps outlined in the <a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer">HTTP Balancer</a>, we start with creating a deployment. In addition to that, I also created a separate namespace first so the pods would be easier to manage. <em>Note: if you follow along, please be sure to cleanup any resources after you are done, because otherwise you will incur costs!</em>.</p>
+
+<p>Create a namespace</p>
+
+<pre><code>kubectl create namespace lbtest
+</code></pre>
+
+<p>Deploy a pod</p>
+
+<pre><code>kubectl --namespace=lbtest run web --image=gcr.io/google-samples/hello-app:1.0 --port=8080
+</code></pre>
+
+<p>Create a service, but instead of exposing it with a Load Balancer type (like I&rsquo;ve done before), use NodePort.</p>
+
+<pre><code>kubectl expose deployment web --target-port=8080 --type=NodePort
+</code></pre>
+
+<p>Because the type is NodePort, this service won&rsquo;t be available to out-of-cluster traffic until we create an ingress resource.
+We can save something like the below into a YAML file and then use the kubectl tool to create the resource.</p>
+
+<pre><code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: basic-ingress
+spec:
+  backend:
+    serviceName: web
+    servicePort: 5000
+</code></pre>
+
+<pre><code>kubectl --namespace=lbtest apply -f myingress.yaml
+</code></pre>
+
+<p>If you wait for a bit and look up the ingress resource</p>
+
+<pre><code>kubectl --namespace=lbtest get ing basic-ingress
+</code></pre>
+
+<p>should see an external IP address, which you can navigate to with your browser to check that everything is ok.</p>
+
+<p>This is as far as the Google Cloud HTTP(S) Balancer tutorial takes us.
+Next it&rsquo;s time to see if we can enable HTTPS on this test service.</p>
+
+<h1 id="creating-certificates-with-let-s-encrypt">Creating certificates with Let&rsquo;s Encrypt</h1>
+
+<p>Like LH Fong mentions in their article, the Google Cloud and Kubernetes docs mention that you can enable HTTPS on an outward facing service by creating a Kubernetes secret and then referencing this secret in the Ingress <code>tls</code> section.</p>
+
+<pre><code>  tls:
+  - secretName: testtls-secret
+</code></pre>
+
+<p>From <a href="https://estl.tech/configuring-https-to-a-web-service-on-google-kubernetes-engine-2d71849520d">LH Fong&rsquo;s article</a>, it seemed that it would be possible to specify both the secret and ingress in the same file like this</p>
+
+<pre><code>#[source](https://estl.tech/configuring-https-to-a-web-service-on-google-kubernetes-engine-2d71849520d)
+apiVersion: v1
+data:
+  tls.crt: base64 encoded cert
+  tls.key: base64 encoded private key
+kind: Secret
+metadata:
+  name: sslcerts
+  namespace: default
+type: Opaque
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tls-ingress
+spec:
+  tls:
+  - secretName: sslcerts
+  backend:
+    serviceName: cm-web
+    servicePort: 80
+
+</code></pre>
+
+<p>but I decided not to try this approach, because I ran into some errors while trying to paste the contents of the cert and private key into the file. Instead, I created the secret in a separate step and then referenced it in the Ingress.</p>
+
+<p>Before we can move on to that step, we need to use Let&rsquo;s Encrypt (or another certificate authority) to obtain a certificate. Usually, this is automated in some fashion to minimize the manual work involved, but for now, I&rsquo;ll just obtain a single certificate following the instructions in LH Fong&rsquo;s article.</p>
+
+<p>Install certbot. On my current Linux system, you can do this with</p>
+
+<pre><code>sudo apt-get install certbot
+</code></pre>
+
+<p>After that, follow the instructions in LH Fong&rsquo;s artcle and run the interactive <code>certbot</code> wizard.
+At some point, the wizard will prompt you to create a TXT record in the form of <code>_acme-challenge.DOMAIN_NAME</code>
+with your domain registrar (for me this was Route 53) and will pause until you confirm that the record has been created
+and the name server is correctly responding to it.</p>
+
+<pre><code>
+Please deploy a DNS TXT record under the name
+
+_acme-challenge.lipcolourmatch.com with the following value:
+
+&lt;random value&gt;
+
+Before continuing, verify the record is deployed.
+</code></pre>
+
+<h3 id="verifying-the-let-s-encrypt-challenge-records">Verifying the Let&rsquo;s Encrypt challenge records</h3>
+
+<p>You can verify that the DNS TXT record has been created by using a Linux utility called <code>dig</code>.</p>
+
+<pre><code>dig @8.8.8.8 TXT _acme-challenge.DOMAINNAME.com
+
+</code></pre>
+
+<p>I tried this with a domain that had the challenge secret and a domain that didn&rsquo;t just to see the difference in the responses from <code>dig</code>.
+A domain that has the challenge record successfully deployed will have an ANSWER section like the one below</p>
+
+<pre><code>;; ANSWER SECTION:
+_acme-challenge.DOMAINNAME.com. 299	IN TXT	&lt;some random string&gt;
+
+</code></pre>
+
+<p>A domain that does not have the challenge record will not have an ANSWER section.</p>
+
+<h3 id="random-certbot-failure">Random certbot failure</h3>
+
+<p>While trying to obtain a certificate from Let&rsquo;s Encrypt, <code>certbot</code> exited with the following error.
+I simply re-ran the command and it was able to successfully complete, but I wanted
+to record this stacktrace in case someone else encounters it.</p>
+
+<pre><code>2019-10-20 17:53:07,569:DEBUG:certbot.error_handler:Encountered exception:
+Traceback (most recent call last):
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/auth_handler.py&quot;, line 73, in handle_authorizations
+    resp = self._solve_challenges(aauthzrs)
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/auth_handler.py&quot;, line 124, in _solve_challenges
+    resp = self.auth.perform(all_achalls)
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/plugins/manual.py&quot;, line 154, in perform
+    perform_achall(achall)
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/plugins/manual.py&quot;, line 213, in _perform_achall_manually
+    display.notification(msg, wrap=False, force_interactive=True)
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/display/util.py&quot;, line 123, in notification
+    input_with_timeout(&quot;Press Enter to Continue&quot;)
+  File &quot;/usr/lib/python2.7/dist-packages/certbot/display/util.py&quot;, line 79, in input_with_timeout
+    rlist, _, _ = select.select([sys.stdin], [], [], timeout)
+error: (4, 'Interrupted system call')
+</code></pre>
+
+<h1 id="creating-a-kubernetes-secret">Creating a Kubernetes Secret</h1>
+
+<p>After <code>certbot</code> successfuly completes, you should have two important files <code>fullchain.pem</code> and <code>privkey.pem</code>.
+You can then create a Kubernetes Secret by giving it a name and pointing it to the paths of the
+the files.</p>
+
+<pre><code>kubectl --namespace=namespacename create secret tls secretname --key /path/to/privkey.pem --cert /path/to/fullchain.pem
+</code></pre>
+
+<p>You should receive a response like this</p>
+
+<pre><code>secret &quot;secretname&quot; created
+</code></pre>
+
+<p>After that, it is time to update the Ingress resource with the name of the secret.
+I already had an existing ingress, so I exported it to a YAML</p>
+
+<pre><code>kubectl --namespace=namespacename get ingress ingressname --export -o yaml &gt; ingressname.yml
+</code></pre>
+
+<p>opened the file and added the name of the Kubernetes Secret storing the keyfiles.</p>
+
+<p>Here is an abridged YAML snippet.</p>
+
+<pre><code>spec:
+ rules: [insert rules here]
+ tls:
+  - secretName: secretname
+
+</code></pre>
+
+<p>Finally I saved the file and replaced the existing ingress with the new one using this command</p>
+
+<pre><code>kubectl --namespace=lipcolourmatch replace -f testing.yml --save-config
+</code></pre>
+
+<p>It might take a few minutes, but evetually you should see the lock item when you
+navigate to https.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/just-an-engineer/"><i class="fa fa-chevron-circle-left"></i> Just an Engineer and Technomyopia</a>
+        </li>
+        
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/experimenting-with-the-affiliate-business-model-for-tech-microbusinesses/">Experimenting With the Affiliate Business Model for Tech Microbusinesses <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

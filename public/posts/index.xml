@@ -52,6 +52,16 @@ This hit close to home, since I&amp;rsquo;m guilty of starting many of these lig
     </item>
     
     <item>
+      <title>Migrating a Service to HTTPS on GKE</title>
+      <link>http://blog.race-conditions.net/posts/migrating-a-service-to-https-on-gke/</link>
+      <pubDate>Sat, 11 May 2019 23:47:10 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/migrating-a-service-to-https-on-gke/</guid>
+      <description>Writer&amp;rsquo;s note: Part of this blogpost was completed in October 2019 while renewing the certificates. These are rough notes, so please exercise care when doing any changes to your Kubernetes configs. Warning: some of the resources referenced in this blog post are paid resources on Google Cloud, so please exercise care!
+Migrating lipcolourmatch.com from HTTP to HTTPS has been on my to-do list on a long time. I made a few attempts on the project previously, but always gave up, because the bits and pieces in the Google Cloud Docs were scattered around and there was no clear, newbie-friendly walkthrough that I could use.</description>
+    </item>
+    
+    <item>
       <title>Just an Engineer and Technomyopia</title>
       <link>http://blog.race-conditions.net/posts/just-an-engineer/</link>
       <pubDate>Mon, 29 Apr 2019 09:13:15 +0100</pubDate>
