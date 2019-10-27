@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Sat, 19 Oct 2019 21:19:06 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 26 Oct 2019 22:03:38 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Newsletter</title>
+      <link>http://blog.race-conditions.net/posts/newsletter/</link>
+      <pubDate>Sat, 26 Oct 2019 22:03:38 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/newsletter/</guid>
+      <description>Hello friends and readers, a quick update: I am starting a newsletter that will feature writing from both this blog and thoughtwisps. If you are interested in subscribing, please visit the TinyLetter subscription page.
+Thank you!</description>
+    </item>
     
     <item>
       <title>The Paperclip Maximizer Is Already Here And It Looks Like Tech Companies Working with ICE</title>
