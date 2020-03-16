@@ -1,0 +1,164 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Race Conditions</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Camilla Montonen" />
+  <meta name="generator" content="Hugo 0.37.1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/">Race Conditions</a>
+            </h1>
+
+      <ul id="social-media">
+          
+        <li><a href="https://github.com/https://github.com/winterflower"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+      </ul>
+      
+      <p><em>One commit at a time</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Colour Search Engine Design: Designing for Colour Comparison</h1>
+
+    
+        <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-03-16T21:02:24&#43;02:00">Mar 16, 2020</time>
+        </li>
+        
+        
+
+        
+
+        <li>4 min read</li>
+    </ul>
+</aside>
+    
+
+    
+
+<p><em>This is a series of notes on colour search design based on my experiences
+desgining search interfaces for the lipstick search engine <a href="http://lipcolourmatch.com">lipcolourmatch.com</a>.
+I will link other parts of the series here as they become available.</em></p>
+
+<h2 id="simple-yet-flexible-the-design-of-the-query-page">Simple yet flexible: the design of the query page</h2>
+
+<p>The initial design of the lipcolourmatch.com search interface drew heavy inspiration
+from the relative minimalism of the Google search engine front page, which
+has a graphic, a search box and a few buttons as the main features.</p>
+
+<p>However, one of the reasons that such a scarcity of elements works for Google&rsquo;s usecase
+is that text search is a good deal more simple than the search interface of a
+niche colour search engine. Not only does the UI designer need to provide a suitable
+UI element for choosing colours, this UI element also needs to account for the various textural
+subtleties that a user may desire to search for.
+In the case of lipcolours, a product has variation not only in the shade, but also in the finish.
+The same colour can appear as metallic (the formula has a added element for high shine and reflectivity), shimmer (the formula is shiny with tiny sparkles), cream (not as shiny as metallic, but more reflective than matte) and matte, which is usually the most pigmented and least reflective form a lipcolour. These variations in texture need to be taken into account in the search query.</p>
+
+<p>To capture this complexity (the solution described here is not perfect by any means and will certainly require more iterations), the initial colour search UI design for lipcolourmatch.com featured
+a colour wheel selector powered by the open source library iro.js and a drop down
+control for adding desired finish and product type filters. For example, one could, if
+desired search for lipstick and liquid lipstick products in a matte navy blue colour.</p>
+
+<h2 id="displaying-the-search-results">Displaying the search results</h2>
+
+<p>The next important step in the design of a colour search engine is the format of
+the results. The initial inspiration was once again drawn from the world
+of text based search engines where web pages that best match a user&rsquo;s query are listed
+in descending order.  Some search engines like Google paginate the results, while
+others like DuckDuckGo offer an infinite-scroll-lazy-loading experience.
+As the user scrolls down, the backend returns more and more results.
+In addition to the results, the results pages of search engines usually also
+display the original query, to help the user see what they searched for and how well what they found
+with the help fo the search engine matches what they searched for.</p>
+
+<p>The initial design of the colour search engine results followed the template above fairly closely.
+The results page features a &ldquo;You searched for&rdquo; section that shows a coloured circle featuring the
+colour the user chose from the colour wheel on the main page and then a list of results in a
+descending similarity order. The closest colours (according to the colour search engines similarity metric) are listed first. Each search result is displayed with a small card that has a circular colour element that captures the colour of the product. In addition, each card has information about the brand, the product type and the finish.</p>
+
+<h2 id="grid-like-results-to-facilitate-comparison">Grid-like results to facilitate comparison</h2>
+
+<p>One of the main tasks that a user is interested in doing is comparing
+the colour in the search query to the colour of the items
+returned in the results to see how close the matches are to the query.
+Thinking back to the results page of traditional text-based
+web search engines, we can see that the pagination design (whether it&rsquo;s
+a traditional pagination UI or an infinitely scrolling UI) does not
+interfere with the process of comparison that a user engages in.
+We take the query we entered into the search engine and then scan
+the results checking which one could potentially have useful
+information related to the query. It&rsquo;s relatively easy to keep
+a text query in mind, so the paginated approach does not pose
+a major hindrance to the user&rsquo;s goal of comparing the query to the results.
+However, keeping the exact shade of a colour in your mind and then scrolling
+or paginating through each result card and comparing the colours is challenging.</p>
+
+<p>One solution for this would be to dock the &ldquo;You searched for&rdquo; card at the top
+of the screen while scrolling and thus facilitate quick and easy side by side
+comparison. However, for the time being implementing this with the Bootstrap
+framework proved too difficult, so instead I&rsquo;ve opted for implementing a grid
+of results with a side by side card arrangement that displays the queried
+colour on the left and allows the user to populate the card on the right
+with a search result from the grid.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="http://blog.race-conditions.net/posts/how-to-build-a-lipcolour-search-engine-with-python/"><i class="fa fa-chevron-circle-left"></i> How to Build a Lipcolour Search Engine with Python</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright &copy; 2018 - Camilla Montonen | 
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://blog.race-conditions.net/index.xml">Subscribe</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

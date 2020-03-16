@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://blog.race-conditions.net/posts/designing-for-colour-comparison/</loc>
+    <lastmod>2020-03-16T21:02:24+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.race-conditions.net/posts/how-to-build-a-lipcolour-search-engine-with-python/</loc>
     <lastmod>2019-11-10T09:02:24+02:00</lastmod>
   </url>
@@ -119,13 +124,13 @@
   
   <url>
     <loc>http://blog.race-conditions.net/posts/</loc>
-    <lastmod>2019-11-10T09:02:24+02:00</lastmod>
+    <lastmod>2020-03-16T21:02:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://blog.race-conditions.net/</loc>
-    <lastmod>2019-11-10T09:02:24+02:00</lastmod>
+    <lastmod>2020-03-16T21:02:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   

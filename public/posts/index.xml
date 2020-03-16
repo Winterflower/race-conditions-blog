@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018 - Camilla Montonen</copyright>
-    <lastBuildDate>Sun, 10 Nov 2019 09:02:24 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 21:02:24 +0200</lastBuildDate>
     
 	<atom:link href="http://blog.race-conditions.net/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Colour Search Engine Design: Designing for Colour Comparison</title>
+      <link>http://blog.race-conditions.net/posts/designing-for-colour-comparison/</link>
+      <pubDate>Mon, 16 Mar 2020 21:02:24 +0200</pubDate>
+      
+      <guid>http://blog.race-conditions.net/posts/designing-for-colour-comparison/</guid>
+      <description>This is a series of notes on colour search design based on my experiences desgining search interfaces for the lipstick search engine lipcolourmatch.com. I will link other parts of the series here as they become available.
+Simple yet flexible: the design of the query page The initial design of the lipcolourmatch.com search interface drew heavy inspiration from the relative minimalism of the Google search engine front page, which has a graphic, a search box and a few buttons as the main features.</description>
+    </item>
     
     <item>
       <title>How to Build a Lipcolour Search Engine with Python</title>
