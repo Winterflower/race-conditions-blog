@@ -59,7 +59,7 @@
 
         
 
-        <li>4 min read</li>
+        <li>5 min read</li>
     </ul>
 </aside>
     
@@ -72,22 +72,39 @@ I will link other parts of the series here as they become available.</em></p>
 
 <h2 id="simple-yet-flexible-the-design-of-the-query-page">Simple yet flexible: the design of the query page</h2>
 
-<p>The initial design of the lipcolourmatch.com search interface drew heavy inspiration
+<p>The initial design of the <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> search interface drew heavy inspiration
 from the relative minimalism of the Google search engine front page, which
 has a graphic, a search box and a few buttons as the main features.</p>
+
+<p><img src="/images/Lipcolourmatch_PP_3.png" alt="Google Search Engine" /></p>
+
+<p><em>The design of Google&rsquo;s text-based search engine is minimal.</em></p>
 
 <p>However, one of the reasons that such a scarcity of elements works for Google&rsquo;s usecase
 is that text search is a good deal more simple than the search interface of a
 niche colour search engine. Not only does the UI designer need to provide a suitable
 UI element for choosing colours, this UI element also needs to account for the various textural
-subtleties that a user may desire to search for.
-In the case of lipcolours, a product has variation not only in the shade, but also in the finish.
+subtleties that a user may desire to search for.</p>
+
+<p><img src="/images/duckduckgo-search-bar.gif" alt="DuckDuckGo" /></p>
+
+<p><em>DuckDuckGo features a minimal search bar.</em></p>
+
+<p>In the case of lipcolours, a product has variation not only in the shade, but also in the finish.
 The same colour can appear as metallic (the formula has a added element for high shine and reflectivity), shimmer (the formula is shiny with tiny sparkles), cream (not as shiny as metallic, but more reflective than matte) and matte, which is usually the most pigmented and least reflective form a lipcolour. These variations in texture need to be taken into account in the search query.</p>
 
-<p>To capture this complexity (the solution described here is not perfect by any means and will certainly require more iterations), the initial colour search UI design for lipcolourmatch.com featured
+<p><img src="/images/lipglossdemo.gif" alt="Lipgloss" /></p>
+
+<p><em>Searching for a lipgloss in a particular shade on <a href="http://lipcolourmatch.com">lipcolourmatch.com</a></em></p>
+
+<p>To capture this complexity (the solution described here is not perfect by any means and will certainly require more iterations), the initial colour search UI design for <a href="http://lipcolourmatch.com">lipcolourmatch.com</a> featured
 a colour wheel selector powered by the open source library iro.js and a drop down
 control for adding desired finish and product type filters. For example, one could, if
 desired search for lipstick and liquid lipstick products in a matte navy blue colour.</p>
+
+<p><img src="/images/navyblue.gif" alt="Navyblue" /></p>
+
+<p><em>Searching for navy blue lipsticks and liquid lips in a matter finish.</em></p>
 
 <h2 id="displaying-the-search-results">Displaying the search results</h2>
 
@@ -95,18 +112,38 @@ desired search for lipstick and liquid lipstick products in a matte navy blue co
 the results. The initial inspiration was once again drawn from the world
 of text based search engines where web pages that best match a user&rsquo;s query are listed
 in descending order.  Some search engines like Google paginate the results, while
-others like DuckDuckGo offer an infinite-scroll-lazy-loading experience.
-As the user scrolls down, the backend returns more and more results.
-In addition to the results, the results pages of search engines usually also
+others like DuckDuckGo offer an infinite-scroll-lazy-loading experience.</p>
+
+<p><img src="/images/google-pagination.png" alt="Paginated search results from Google" /></p>
+
+<p><em>UI design for paginating search results on Google</em></p>
+
+<p>As the user scrolls down, the backend returns more and more results.</p>
+
+<p><img src="/images/duckduckgo-pagination.gif" alt="DuckDuckGo pagination" /></p>
+
+<p><em>DuckDuckGo pagination is an infinite-scroll.</em></p>
+
+<p>In addition to the results, the results pages of search engines usually also
 display the original query, to help the user see what they searched for and how well what they found
 with the help fo the search engine matches what they searched for.</p>
 
 <p>The initial design of the colour search engine results followed the template above fairly closely.
 The results page features a &ldquo;You searched for&rdquo; section that shows a coloured circle featuring the
 colour the user chose from the colour wheel on the main page and then a list of results in a
-descending similarity order. The closest colours (according to the colour search engines similarity metric) are listed first. Each search result is displayed with a small card that has a circular colour element that captures the colour of the product. In addition, each card has information about the brand, the product type and the finish.</p>
+descending similarity order. The closest colours (according to the colour search engines similarity metric) are listed first.</p>
+
+<p><img src="/images/searchresults.png" alt="Search resuslts" /></p>
+
+<p><em>Search results from the colour search engine feature the original query, the results in descending order of colour similarity as well as small cards with information.</em></p>
+
+<p>Each search result is displayed with a small card that has a circular colour element that captures the colour of the product. In addition, each card has information about the brand, the product type and the finish.</p>
 
 <h2 id="grid-like-results-to-facilitate-comparison">Grid-like results to facilitate comparison</h2>
+
+<p><img src="/images/Lipcolourmatch_PP_4.png" alt="Results comparison" /></p>
+
+<p><em>One key task a user wants to do is to compare the results with the query. This is farily simple with a text search engine but harder when the query is a colour.</em></p>
 
 <p>One of the main tasks that a user is interested in doing is comparing
 the colour in the search query to the colour of the items
@@ -119,9 +156,19 @@ We take the query we entered into the search engine and then scan
 the results checking which one could potentially have useful
 information related to the query. It&rsquo;s relatively easy to keep
 a text query in mind, so the paginated approach does not pose
-a major hindrance to the user&rsquo;s goal of comparing the query to the results.
-However, keeping the exact shade of a colour in your mind and then scrolling
-or paginating through each result card and comparing the colours is challenging.</p>
+a major hindrance to the user&rsquo;s goal of comparing the query to the results.</p>
+
+<p><img src="/images/mac-chili-pages.gif" alt="Mac Chili Paginated" /></p>
+
+<p><em>Paginated search results from the colour search engine. Keeping the exact query colour in mind and paginating to compare results can be hard.</em></p>
+
+<p>However, keeping the exact shade of a colour (the colour in the query) in your mind and then scrolling
+or paginating through each result card and comparing the colours is challenging.
+You can see for yourself in the animated screencapture above.</p>
+
+<p><img src="/images/mac-chili-grid.gif" alt="Mac Chili Grid" /></p>
+
+<p><em>A grid design facilitates colour comparison.</em></p>
 
 <p>One solution for this would be to dock the &ldquo;You searched for&rdquo; card at the top
 of the screen while scrolling and thus facilitate quick and easy side by side
@@ -130,6 +177,11 @@ framework proved too difficult, so instead I&rsquo;ve opted for implementing a g
 of results with a side by side card arrangement that displays the queried
 colour on the left and allows the user to populate the card on the right
 with a search result from the grid.</p>
+
+<p>I will be iterating more on this design in the near future and look forward
+to sharing what I learn with you!
+If you have any comments, suggestions or questions, please get in touch with
+me via email camilla[at]synbyote.io.</p>
 
 
 </article>
